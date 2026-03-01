@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -568,7 +569,7 @@
 
     /* ── Footer ── */
     .site-footer {
-      background: var(--gray-700);
+      background: var(--black);
       color: rgba(255,255,255,0.85); /* white on #333 = 12.63:1 ✅ */
       padding: 48px 24px;
       text-align: center;
@@ -636,13 +637,13 @@
       color: rgba(255,255,255,0.55); /* ~6.9:1 on #333 ✅ */
     }
 
-    /* ── Animations ── */
-    .fade-up {
+    /* ── Animations (only when JS activates) ── */
+    .js-ready .fade-up {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .js-ready .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -849,7 +850,7 @@
       <p class="section-subtitle fade-up">Browse photos from our community events.</p>
       <div class="albums-grid">
         <a class="album-card fade-up" href="https://photos.app.goo.gl/cC3PAXjKx3i63X2U6" target="_blank" rel="noopener" aria-label="View Lunar New Year 2026 photo album">
-          <img class="album-thumb" src="https://lh3.googleusercontent.com/a/ACg8ocIPCftJfaQxipb2NhHW7zXHQNZOx5Zh79q3QnCvGTi_RNVKkQ=s600" alt="" loading="lazy" width="600" height="315">
+          <img class="album-thumb" src="https://lh3.googleusercontent.com/pw/AP1GczOX7pmCjqsvZWVhgd9N0108aZ17c28j819WFYan0MVtftZmXCf-7IWoAeZSAviAySs-skZ1Tww88QXzVbA9saHU2NauUAcq1_zePfUhxIK7VPJIvEnJ=w600-h315-p-k" alt="" loading="lazy" width="600" height="315">
           <div class="album-info">
             <span class="album-badge album-badge-new">New</span>
             <h4>Lunar New Year 2026</h4>
@@ -886,14 +887,17 @@
   </div>
   <div class="footer-name">Josiah Quincy Elementary <span class="accent">SCC</span></div>
   <p>Email us questions, ideas, or feedback — we'd love to hear from you!</p>
-  <a href="mailto:josiahquincyparentcouncil@gmail.com" class="footer-email">
+  <a href="/cdn-cgi/l/email-protection#f892978b919990898d91969b8188998a9d968c9b978d969b9194b89f95999194d69b9795" class="footer-email">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    josiahquincyparentcouncil@gmail.com
+    <span class="__cf_email__" data-cfemail="8be1e4f8e2eae3fafee2e5e8f2fbeaf9eee5ffe8e4fee5e8e2e7cbece6eae2e7a5e8e4e6">[email&#160;protected]</span>
   </a>
   <div class="footer-bottom">Made with care by the JQES School Community Council</div>
 </footer>
 
 <script>
+  // ── Enable animations only when JS runs ──
+  document.documentElement.classList.add('js-ready');
+
   // ── Scroll fade-in (respects prefers-reduced-motion) ──
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) {
@@ -938,14 +942,4 @@
     if (e.key !== 'Tab') return;
     const focusable = mobileNav.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
     const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey) {
-      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-    } else {
-      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-</script>
-
-</body>
-</html>
+    const las
