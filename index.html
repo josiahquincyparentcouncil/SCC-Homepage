@@ -506,6 +506,9 @@
       padding: 24px;
       border: 1px solid rgba(0,0,0,0.06);
       transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
     }
     .event-card:hover {
       transform: translateY(-3px);
@@ -517,7 +520,7 @@
       align-items: center;
       justify-content: center;
       min-width: 64px;
-      height: 72px;
+      height: 82px;
       background: var(--red);
       border-radius: var(--radius-sm);
       color: var(--white);
@@ -537,6 +540,16 @@
       font-family: var(--font-display);
       font-size: 1.6rem;
       line-height: 1.1;
+    }
+    .event-date .day-name {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      opacity: 0.85;
+      margin-top: 2px;
     }
     .event-date .date-sep {
       font-size: 0.65rem;
@@ -1065,13 +1078,20 @@
         endMonth: MONTHS[endDisplay.getMonth()],
         endDay: endDisplay.getDate(),
         dayName: DAYS[start.getDay()],
+        htmlLink: item.htmlLink || '',
       };
     }
 
     // ── Render a single event card ──
     function renderEventCard(evt, isFeatured) {
-      const card = document.createElement('article');
+      const card = document.createElement('a');
       card.className = 'event-card fade-up' + (isFeatured ? ' event-card-featured' : '');
+      if (evt.htmlLink) {
+        card.href = evt.htmlLink;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.setAttribute('aria-label', `${evt.title} — open in Google Calendar`);
+      }
 
       // Badge
       let badgeClass, badgeText;
@@ -1089,14 +1109,15 @@
       // Date block
       let dateHTML;
       if (evt.isMultiDay) {
-        dateHTML = `<div class="event-date event-date-range" aria-label="${evt.month} ${evt.day} through ${evt.endMonth} ${evt.endDay}">
+        dateHTML = `<div class="event-date event-date-range" aria-label="${evt.dayName}, ${evt.month} ${evt.day} through ${evt.endMonth} ${evt.endDay}">
           <span class="month">${evt.month}</span>
           <span class="day">${evt.day}</span>
           <span class="date-sep">–</span>
           <span class="day">${evt.endDay}</span>
         </div>`;
       } else {
-        dateHTML = `<div class="event-date" aria-label="${evt.month} ${evt.day}">
+        dateHTML = `<div class="event-date" aria-label="${evt.dayName}, ${evt.month} ${evt.day}">
+          <span class="day-name">${evt.dayName.substring(0, 3)}</span>
           <span class="month">${evt.month}</span>
           <span class="day">${evt.day}</span>
         </div>`;
