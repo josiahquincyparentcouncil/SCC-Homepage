@@ -804,11 +804,35 @@
             <span class="event-badge event-badge-upcoming">Upcoming</span>
             <h4>Teacher Appreciation Week</h4>
             <div class="event-host">Celebrating our amazing JQES staff</div>
-            <p class="event-description">Monday, May 4 – Friday, May 8, 2026 at JQES — Help us show our teachers and staff how much they mean to our community! Highlights include a special bao bun treat on Tuesday, and a potluck with pastries and gift giveaway on Friday. Stay tuned for ways to get involved and show your appreciation.</p>
+            <p class="event-description">Monday, May 4 – Friday, May 8, 2026 at JQES — Help us show our teachers and staff how much they mean to our community! Stay tuned for ways to get involved and show your appreciation.</p>
           </div>
         </article>
 
-        <!-- ── EVENT 4: Coffee Hour (May) ── -->
+        <!-- ── EVENT 4: AAPI Heritage Month Showcase ── -->
+        <article class="event-card fade-up">
+          <div class="event-date" aria-label="May 14">
+            <span class="month">May</span>
+            <span class="day">14</span>
+          </div>
+          <div class="event-details">
+            <span class="event-badge event-badge-upcoming">Upcoming</span>
+            <h4>AAPI Heritage Month Showcase</h4>
+            <div class="event-host">All families welcome</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                3:00 – 4:00 PM
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+                Red Brick Area
+              </span>
+            </div>
+            <p class="event-description">Thursday, May 14, 2026 · After School — A special showcase in the red brick area for families to view the AAPI Heritage Month installation.</p>
+          </div>
+        </article>
+
+        <!-- ── EVENT 5: Coffee Hour (May) ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="May 29">
             <span class="month">May</span>
@@ -822,7 +846,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 5: K1/K2 Orientation Table ── -->
+        <!-- ── EVENT 6: K1/K2 Orientation Table ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="May, date to be determined">
             <span class="month">May</span>
@@ -836,7 +860,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 6: SCC End of Year Elections Meeting ── -->
+        <!-- ── EVENT 7: SCC End of Year Elections Meeting ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="June 2">
             <span class="month">Jun</span>
@@ -846,11 +870,21 @@
             <span class="event-badge event-badge-upcoming">Upcoming</span>
             <h4>SCC End of Year Elections Meeting</h4>
             <div class="event-host">All JQES families invited</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                5:30 – 7:00 PM
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+                Cafeteria
+              </span>
+            </div>
             <p class="event-description">Tuesday, June 2, 2026 · Evening at JQES — Annual SCC meeting to elect officers for the 2026–2027 school year. Includes year-end reflection on SCC initiatives and a planning touchpoint for the year ahead. Dinner and movement activities for kids provided. All families are welcome to participate by voting or running for a position.</p>
           </div>
         </article>
 
-        <!-- ── EVENT 7: "This Is Us" – International Day of Play ── -->
+        <!-- ── EVENT 8: "This Is Us" – International Day of Play ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="June 11">
             <span class="month">Jun</span>
@@ -864,7 +898,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 8: 5th Grade Moving Up Ceremony ── -->
+        <!-- ── EVENT 9: 5th Grade Moving Up Ceremony ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="June, date to be determined">
             <span class="month">Jun</span>
@@ -882,7 +916,7 @@
 
       <!-- Toggle button -->
       <button class="events-toggle fade-up" id="events-toggle" aria-expanded="false" aria-controls="events-more">
-        <span>Show 7 More Events</span>
+        <span>Show 8 More Events</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </button>
     </div>
@@ -1030,7 +1064,7 @@
       const isExpanded = eventsMore.classList.toggle('expanded');
       eventsToggle.classList.toggle('expanded');
       eventsToggle.setAttribute('aria-expanded', isExpanded);
-      eventsToggle.querySelector('span').textContent = isExpanded ? 'Show Fewer Events' : 'Show 7 More Events';
+      eventsToggle.querySelector('span').textContent = isExpanded ? 'Show Fewer Events' : 'Show 8 More Events';
       // Trigger fade-in for newly visible cards
       if (isExpanded) {
         eventsMore.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
