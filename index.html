@@ -660,6 +660,68 @@
       .event-date-range { flex-direction: column; gap: 2px; }
     }
 
+    /* ── Event Skeleton Loading ── */
+    .event-skeleton-wrap {
+      display: contents;
+    }
+    .event-skeleton {
+      display: flex;
+      gap: 20px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .event-skeleton.event-card-featured { grid-column: 1 / -1; }
+    .skel-date {
+      min-width: 64px;
+      height: 72px;
+      background: linear-gradient(110deg, #e8e4df 30%, #f5f1ec 50%, #e8e4df 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+    .skel-body { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .skel-badge {
+      width: 90px; height: 20px;
+      background: linear-gradient(110deg, #e8e4df 30%, #f5f1ec 50%, #e8e4df 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: 50px;
+    }
+    .skel-title {
+      width: 60%; height: 22px;
+      background: linear-gradient(110deg, #e8e4df 30%, #f5f1ec 50%, #e8e4df 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: 6px;
+    }
+    .skel-line {
+      width: 100%; height: 14px;
+      background: linear-gradient(110deg, #e8e4df 30%, #f5f1ec 50%, #e8e4df 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: 6px;
+    }
+    .skel-line-short { width: 75%; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ── No Events State ── */
+    .events-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--gray-500);
+    }
+    .events-empty svg {
+      width: 48px; height: 48px;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+    .events-empty p { font-size: 0.95rem; line-height: 1.6; }
+    .events-empty a { color: var(--blue-text); font-weight: 600; }
+
     /* ── Animations (only when JS activates) ── */
     .js-ready .fade-up {
       opacity: 0;
@@ -737,188 +799,44 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════
-       UPCOMING EVENTS — Easy to update!
+       UPCOMING EVENTS — Powered by Google Calendar!
        
-       To ADD a new event:  Copy an <article class="event-card"> block.
-         • Put it in "events-grid" to always show it.
-         • Put it in "events-more" to hide it behind the toggle.
-       To REMOVE an event:  Delete the entire <article>...</article> block.
+       Events are automatically pulled from:
+       josiahquincyparentcouncil@gmail.com
        
-       The first 1 event (in events-grid) is always visible.
-       The rest (in events-more) are collapsed behind a "Show More" button.
-       Update the button text count if you add/remove hidden events.
+       ★ HOW TO SET UP:
+       1. Go to https://console.cloud.google.com
+       2. Create a project (or use existing)
+       3. Enable "Google Calendar API"
+       4. Create an API key (APIs & Services → Credentials)
+       5. Restrict it to "Google Calendar API" + your website domain
+       6. Replace YOUR_GOOGLE_API_KEY_HERE below with your key
        
-       Badge options:
-         class="event-badge event-badge-soon"     → orange "Coming Soon"
-         class="event-badge event-badge-upcoming"  → blue "Upcoming"
+       The next 5 upcoming events are shown automatically.
+       Past events disappear and the next ones fill in.
        ═══════════════════════════════════════════════════════════════ -->
   <section class="events-section" id="events" aria-labelledby="events-heading">
     <div class="container">
       <h2 class="section-title fade-up" id="events-heading">Upcoming Events</h2>
       <p class="section-subtitle fade-up">Mark your calendars — here's what's coming up next!</p>
 
-      <div class="events-grid">
+      <!-- Dynamic events container — populated by JavaScript -->
+      <div class="events-grid" id="events-grid" aria-live="polite">
 
-        <!-- ── EVENT 1: STEAM Night ── -->
-        <article class="event-card event-card-featured fade-up">
-          <div class="event-date" aria-label="March 19">
-            <span class="month">Mar</span>
-            <span class="day">19</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-soon">Coming Soon</span>
-            <h4>STEAM Night</h4>
-            <div class="event-host">A fun evening for the whole family</div>
-            <p class="event-description">Thursday, March 19, 2026 · Evening at JQES — Bring the kids for a hands-on evening of Science, Technology, Engineering, Arts, and Math! Explore interactive activities led by teachers and community partners — a great night of learning, creativity, and fun for all grade levels.</p>
-          </div>
-        </article>
+        <!-- Loading skeleton (shown while fetching) -->
+        <div class="event-skeleton-wrap" id="events-loading">
+          <div class="event-skeleton event-card-featured"><div class="skel-date"></div><div class="skel-body"><div class="skel-badge"></div><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line skel-line-short"></div></div></div>
+          <div class="event-skeleton"><div class="skel-date"></div><div class="skel-body"><div class="skel-badge"></div><div class="skel-title"></div><div class="skel-line"></div></div></div>
+          <div class="event-skeleton"><div class="skel-date"></div><div class="skel-body"><div class="skel-badge"></div><div class="skel-title"></div><div class="skel-line"></div></div></div>
+        </div>
 
       </div>
 
-      <!-- ── Collapsible: remaining events (two-column) ── -->
-      <div class="events-more" id="events-more">
-
-        <!-- ── EVENT 2: Coffee Hour ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="April 10">
-            <span class="month">Apr</span>
-            <span class="day">10</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>Coffee Hour</h4>
-            <div class="event-host">All families welcome</div>
-            <p class="event-description">Friday, April 10, 2026 · Morning at JQES — Stop by for coffee and conversation! A relaxed morning to meet other families, chat with teachers and school leadership, and share your thoughts. A great chance to connect and be heard in a welcoming, informal setting.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 3: Teacher Appreciation Week ── -->
-        <article class="event-card fade-up">
-          <div class="event-date event-date-range" aria-label="May 4 through 8">
-            <span class="month">May</span>
-            <span class="day">4</span>
-            <span class="date-sep">–</span>
-            <span class="day">8</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>Teacher Appreciation Week</h4>
-            <div class="event-host">Celebrating our amazing JQES staff</div>
-            <p class="event-description">Monday, May 4 – Friday, May 8, 2026 at JQES — Help us show our teachers and staff how much they mean to our community! Stay tuned for ways to get involved and show your appreciation.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 4: AAPI Heritage Month Showcase ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="May 14">
-            <span class="month">May</span>
-            <span class="day">14</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>AAPI Heritage Month Showcase</h4>
-            <div class="event-host">All families welcome</div>
-            <div class="event-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                3:00 – 4:00 PM
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
-                Red Brick Area
-              </span>
-            </div>
-            <p class="event-description">Thursday, May 14, 2026 · After School — A special showcase in the red brick area for families to view the AAPI Heritage Month installation.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 5: Coffee Hour (May) ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="May 29">
-            <span class="month">May</span>
-            <span class="day">29</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>Coffee Hour</h4>
-            <div class="event-host">All families welcome</div>
-            <p class="event-description">Friday, May 29, 2026 · Morning at JQES — Stop by for coffee and conversation before the SCC meeting! A relaxed morning to meet other families, chat with school leadership, and learn about the upcoming SCC end-of-year elections.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 6: K1/K2 Orientation Table ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="May, date to be determined">
-            <span class="month">May</span>
-            <span class="day">TBD</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>K1/K2 Orientation Welcome Table</h4>
-            <div class="event-host">SCC welcomes incoming families</div>
-            <p class="event-description">Late Spring 2026 · Date TBD — SCC will be at K1/K2 orientation with a welcome table featuring resources, swag, and a chance to meet fellow families. A warm start to the JQES journey for our newest community members!</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 7: SCC End of Year Elections Meeting ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="June 2">
-            <span class="month">Jun</span>
-            <span class="day">2</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>SCC End of Year Elections Meeting</h4>
-            <div class="event-host">All JQES families invited</div>
-            <div class="event-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                5:30 – 7:00 PM
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
-                Cafeteria
-              </span>
-            </div>
-            <p class="event-description">Tuesday, June 2, 2026 · Evening at JQES — Annual SCC meeting to elect officers for the 2026–2027 school year. Includes year-end reflection on SCC initiatives and a planning touchpoint for the year ahead. Dinner and movement activities for kids provided. All families are welcome to participate by voting or running for a position.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 8: "This Is Us" – International Day of Play ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="June 11">
-            <span class="month">Jun</span>
-            <span class="day">11</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>"This Is Us" — International Day of Play</h4>
-            <div class="event-host">A school-wide celebration for all families</div>
-            <p class="event-description">Thursday, June 11, 2026 at JQES — A joyful end-of-year celebration of our community! Enjoy games, performances, music, and activities that celebrate the diversity and spirit of JQES families. Come play, connect, and make memories together.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 9: 5th Grade Moving Up Ceremony ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="June, date to be determined">
-            <span class="month">Jun</span>
-            <span class="day">TBD</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>5th Grade Moving Up Ceremony</h4>
-            <div class="event-host">Celebrating our graduating students</div>
-            <p class="event-description">June 2026 · Date TBD — A celebration for students and families marking the transition to middle school. Led by the school with support from 4th grade families and SCC. A moment to honor student milestones and celebrate growth together.</p>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Toggle button -->
-      <button class="events-toggle fade-up" id="events-toggle" aria-expanded="false" aria-controls="events-more">
-        <span>Show 8 More Events</span>
+      <!-- "View Full Calendar" link -->
+      <a href="#calendar" class="events-toggle fade-up" style="text-decoration:none;">
+        <span>View Full Calendar Below</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
+      </a>
     </div>
   </section>
 
@@ -1056,21 +974,251 @@
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   }
 
-  // ── Events toggle (show/hide extra events) ──
-  const eventsToggle = document.getElementById('events-toggle');
-  const eventsMore = document.getElementById('events-more');
-  if (eventsToggle && eventsMore) {
-    eventsToggle.addEventListener('click', function() {
-      const isExpanded = eventsMore.classList.toggle('expanded');
-      eventsToggle.classList.toggle('expanded');
-      eventsToggle.setAttribute('aria-expanded', isExpanded);
-      eventsToggle.querySelector('span').textContent = isExpanded ? 'Show Fewer Events' : 'Show 8 More Events';
-      // Trigger fade-in for newly visible cards
-      if (isExpanded) {
-        eventsMore.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
+  // ═══════════════════════════════════════════════════════════
+  //  GOOGLE CALENDAR → DYNAMIC EVENTS
+  //  ★ Replace the API key below with your own
+  // ═══════════════════════════════════════════════════════════
+  (function () {
+    const CALENDAR_ID = 'josiahquincyparentcouncil@gmail.com';
+    const API_KEY = 'AIzaSyDtIOy_24NOyPh88QoNte2NssY3H40EIS8';
+    const MAX_EVENTS = 5;
+    const TIMEZONE = 'America/New_York';
+
+    const grid = document.getElementById('events-grid');
+    const loading = document.getElementById('events-loading');
+
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    // ── Fetch upcoming events from Google Calendar API ──
+    async function fetchEvents() {
+      const now = new Date().toISOString();
+      const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events`
+        + `?key=${API_KEY}`
+        + `&timeMin=${now}`
+        + `&maxResults=${MAX_EVENTS}`
+        + `&singleEvents=true`
+        + `&orderBy=startTime`
+        + `&timeZone=${TIMEZONE}`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`API error ${res.status}`);
+        const data = await res.json();
+        return data.items || [];
+      } catch (err) {
+        console.warn('Google Calendar API error:', err);
+        return null; // null = error, [] = no events
       }
-    });
-  }
+    }
+
+    // ── Parse a Google Calendar event ──
+    function parseEvent(item) {
+      const isAllDay = !!item.start.date;
+      const startStr = item.start.dateTime || item.start.date;
+      const endStr = item.end.dateTime || item.end.date;
+      const start = new Date(startStr);
+      const end = new Date(endStr);
+
+      // For all-day events, end date is exclusive — subtract 1 day
+      const endDisplay = isAllDay ? new Date(end.getTime() - 86400000) : end;
+
+      // Check if multi-day
+      const startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+      const endDay = new Date(endDisplay.getFullYear(), endDisplay.getMonth(), endDisplay.getDate());
+      const isMultiDay = endDay > startDay;
+
+      // Build time string for timed events
+      let timeStr = '';
+      if (!isAllDay) {
+        const fmt = (d) => d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: TIMEZONE });
+        timeStr = fmt(start) + ' – ' + fmt(end);
+      }
+
+      // Location from event
+      const location = item.location || '';
+
+      // Description — take first sentence or first 160 chars
+      let description = item.description || '';
+      // Strip HTML tags
+      description = description.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+      // Take first ~160 chars at a word boundary
+      if (description.length > 160) {
+        description = description.substring(0, 160).replace(/\s+\S*$/, '') + '…';
+      }
+
+      // Days until event for badge
+      const daysUntil = Math.ceil((start - new Date()) / 86400000);
+
+      return {
+        title: item.summary || 'Untitled Event',
+        start,
+        end: endDisplay,
+        isAllDay,
+        isMultiDay,
+        timeStr,
+        location,
+        description,
+        daysUntil,
+        month: MONTHS[start.getMonth()],
+        day: start.getDate(),
+        endMonth: MONTHS[endDisplay.getMonth()],
+        endDay: endDisplay.getDate(),
+        dayName: DAYS[start.getDay()],
+      };
+    }
+
+    // ── Render a single event card ──
+    function renderEventCard(evt, isFeatured) {
+      const card = document.createElement('article');
+      card.className = 'event-card fade-up' + (isFeatured ? ' event-card-featured' : '');
+
+      // Badge
+      let badgeClass, badgeText;
+      if (evt.daysUntil <= 7) {
+        badgeClass = 'event-badge-soon';
+        badgeText = evt.daysUntil <= 0 ? 'Today' : evt.daysUntil === 1 ? 'Tomorrow' : 'This Week';
+      } else if (evt.daysUntil <= 14) {
+        badgeClass = 'event-badge-soon';
+        badgeText = 'Coming Soon';
+      } else {
+        badgeClass = 'event-badge-upcoming';
+        badgeText = 'Upcoming';
+      }
+
+      // Date block
+      let dateHTML;
+      if (evt.isMultiDay) {
+        dateHTML = `<div class="event-date event-date-range" aria-label="${evt.month} ${evt.day} through ${evt.endMonth} ${evt.endDay}">
+          <span class="month">${evt.month}</span>
+          <span class="day">${evt.day}</span>
+          <span class="date-sep">–</span>
+          <span class="day">${evt.endDay}</span>
+        </div>`;
+      } else {
+        dateHTML = `<div class="event-date" aria-label="${evt.month} ${evt.day}">
+          <span class="month">${evt.month}</span>
+          <span class="day">${evt.day}</span>
+        </div>`;
+      }
+
+      // Time & location meta
+      let metaHTML = '';
+      if (evt.timeStr || evt.location) {
+        metaHTML = '<div class="event-meta">';
+        if (evt.timeStr) {
+          metaHTML += `<span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            ${evt.timeStr}
+          </span>`;
+        }
+        if (evt.location) {
+          metaHTML += `<span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${evt.location}
+          </span>`;
+        }
+        metaHTML += '</div>';
+      }
+
+      // Description
+      const descHTML = evt.description
+        ? `<p class="event-description">${evt.description}</p>`
+        : '';
+
+      card.innerHTML = `
+        ${dateHTML}
+        <div class="event-details">
+          <span class="event-badge ${badgeClass}">${badgeText}</span>
+          <h4>${evt.title}</h4>
+          ${metaHTML}
+          ${descHTML}
+        </div>
+      `;
+
+      return card;
+    }
+
+    // ── Render all events ──
+    function renderEvents(events) {
+      // Remove loading skeleton
+      if (loading) loading.remove();
+
+      if (!events || events.length === 0) {
+        grid.innerHTML = `
+          <div class="events-empty fade-up visible">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <p>No upcoming events right now — check back soon!<br>
+            <a href="#calendar">View the full calendar</a> for more details.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const parsed = events.map(parseEvent);
+
+      parsed.forEach((evt, i) => {
+        const card = renderEventCard(evt, i === 0);
+        grid.appendChild(card);
+
+        // Trigger fade-in with stagger
+        requestAnimationFrame(() => {
+          setTimeout(() => card.classList.add('visible'), i * 120);
+        });
+      });
+
+      // Re-observe for scroll animations
+      if (!prefersReducedMotion) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        grid.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+      }
+    }
+
+    // ── Show fallback if API key isn't set ──
+    function renderFallback() {
+      if (loading) loading.remove();
+      grid.innerHTML = `
+        <div class="events-empty fade-up visible">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <p>Events are loading from our calendar.<br>
+          <a href="#calendar">View the full calendar below</a> for all upcoming events.</p>
+        </div>
+      `;
+    }
+
+    // ── Initialize ──
+    if (!API_KEY || API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') {
+      console.info(
+        '%c📅 JQES Events: Add your Google API key to enable dynamic events!',
+        'color: #E00827; font-weight: bold; font-size: 14px;'
+      );
+      console.info('See instructions in the HTML comments above the events section.');
+      renderFallback();
+    } else {
+      fetchEvents().then(events => {
+        if (events === null) {
+          renderFallback();
+        } else {
+          renderEvents(events);
+        }
+      });
+
+      // ── Auto-refresh every 30 minutes ──
+      setInterval(() => {
+        fetchEvents().then(events => {
+          if (events !== null) {
+            // Clear existing events
+            grid.querySelectorAll('.event-card, .events-empty').forEach(el => el.remove());
+            renderEvents(events);
+          }
+        });
+      }, 30 * 60 * 1000);
+    }
+  })();
 
 </script>
 </body>
