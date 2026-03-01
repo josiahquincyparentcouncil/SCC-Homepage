@@ -846,31 +846,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 5: Red Brick Gatherings (AAPI Heritage Month) ── -->
-        <article class="event-card fade-up">
-          <div class="event-date" aria-label="May 14">
-            <span class="month">May</span>
-            <span class="day">14</span>
-          </div>
-          <div class="event-details">
-            <span class="event-badge event-badge-upcoming">Upcoming</span>
-            <h4>Red Brick Gatherings — AAPI Heritage Month</h4>
-            <div class="event-host">SCC &amp; School Leadership</div>
-            <div class="event-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                3:45 – 4:30 PM
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Red Brick Area
-              </span>
-            </div>
-            <p class="event-description">Thursday, May 14, 2026 · After School — A special gathering hour in the red brick area for families to view the AAPI Heritage Month installation and connect with SCC and school leadership. Special treats provided by a local AAPI-owned business.</p>
-          </div>
-        </article>
-
-        <!-- ── EVENT 6: Coffee Hour (May) ── -->
+        <!-- ── EVENT 5: Coffee Hour (May) ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="May 29">
             <span class="month">May</span>
@@ -884,7 +860,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 7: K1/K2 Orientation Table ── -->
+        <!-- ── EVENT 6: K1/K2 Orientation Table ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="May, date to be determined">
             <span class="month">May</span>
@@ -898,7 +874,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 8: SCC End of Year Elections Meeting ── -->
+        <!-- ── EVENT 7: SCC End of Year Elections Meeting ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="June 2">
             <span class="month">Jun</span>
@@ -912,7 +888,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 9: "This Is Us" – International Day of Play ── -->
+        <!-- ── EVENT 8: "This Is Us" – International Day of Play ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="June 11">
             <span class="month">Jun</span>
@@ -926,7 +902,7 @@
           </div>
         </article>
 
-        <!-- ── EVENT 10: 5th Grade Moving Up Ceremony ── -->
+        <!-- ── EVENT 9: 5th Grade Moving Up Ceremony ── -->
         <article class="event-card fade-up">
           <div class="event-date" aria-label="June, date to be determined">
             <span class="month">Jun</span>
@@ -944,7 +920,7 @@
 
       <!-- Toggle button -->
       <button class="events-toggle fade-up" id="events-toggle" aria-expanded="false" aria-controls="events-more">
-        <span>Show 9 More Events</span>
+        <span>Show 8 More Events</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </button>
     </div>
@@ -1092,7 +1068,7 @@
       const isExpanded = eventsMore.classList.toggle('expanded');
       eventsToggle.classList.toggle('expanded');
       eventsToggle.setAttribute('aria-expanded', isExpanded);
-      eventsToggle.querySelector('span').textContent = isExpanded ? 'Show Fewer Events' : 'Show 9 More Events';
+      eventsToggle.querySelector('span').textContent = isExpanded ? 'Show Fewer Events' : 'Show 8 More Events';
       // Trigger fade-in for newly visible cards
       if (isExpanded) {
         eventsMore.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
