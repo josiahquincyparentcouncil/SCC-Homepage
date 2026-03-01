@@ -485,6 +485,181 @@
       color: rgba(255,255,255,0.55); /* ~6.9:1 on #333 ✅ */
     }
 
+    /* ── Upcoming Events ── */
+    .events-section { padding: 64px 24px; background: var(--white); }
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    @media (min-width: 700px) {
+      .events-grid { grid-template-columns: 1fr 1fr; }
+      .events-grid .event-card-featured { grid-column: 1 / -1; }
+    }
+    .event-card {
+      display: flex;
+      gap: 20px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .event-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+    .event-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      height: 72px;
+      background: var(--red);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      flex-shrink: 0;
+      padding: 6px 8px;
+    }
+    .event-date-range { height: auto; padding: 10px 8px; }
+    .event-date .month {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+    .event-date .day {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      line-height: 1.1;
+    }
+    .event-date .date-sep {
+      font-size: 0.65rem;
+      opacity: 0.75;
+      line-height: 1;
+      margin: 2px 0;
+    }
+    .event-details { flex: 1; min-width: 0; }
+    .event-details h4 {
+      font-size: 1.05rem;
+      color: var(--black);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .event-host {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+    .event-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+    .event-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .event-meta svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.7; }
+    .event-description {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+    .event-links {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .event-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--blue-text);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .event-link:hover { border-color: var(--blue); background: #e0f0fa; }
+    .event-link svg { width: 14px; height: 14px; }
+    .event-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .event-badge-upcoming { background: #e0f0fa; color: var(--blue-text); }
+    .event-badge-soon { background: #fff3e0; color: #b35900; }
+    .events-more {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+    @media (min-width: 700px) {
+      .events-more { grid-template-columns: 1fr 1fr; }
+    }
+    .events-more.expanded {
+      max-height: 1200px;
+      opacity: 1;
+      margin-top: 20px;
+    }
+    .events-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 24px auto 0;
+      padding: 10px 28px;
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .events-toggle:hover { border-color: var(--red); color: var(--red); }
+    .events-toggle svg {
+      width: 18px; height: 18px;
+      transition: transform 0.3s ease;
+    }
+    .events-toggle.expanded svg { transform: rotate(180deg); }
+    @media (max-width: 560px) {
+      .events-more { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .event-card { flex-direction: column; gap: 14px; }
+      .event-date { flex-direction: row; gap: 8px; width: fit-content; height: auto; padding: 8px 16px; }
+      .event-date .date-sep { margin: 0; }
+      .event-date-range { flex-direction: column; gap: 2px; }
+    }
+
     /* ── Animations (only when JS activates) ── */
     .js-ready .fade-up {
       opacity: 0;
@@ -499,7 +674,7 @@
       .hero-logo-scc { width: 64px; height: 64px; }
       .hero-logo-jqes { width: 80px; height: 64px; }
       .hero-logos { gap: 14px; margin-bottom: 22px; }
-      .calendar-section, .email-section, .albums-section { padding: 48px 24px; }
+      .calendar-section, .email-section, .albums-section, .events-section { padding: 48px 24px; }
     }
     @media (min-width: 769px) {
     }
@@ -559,6 +734,180 @@
   <!-- Funding Note -->
   <section class="funding-note fade-up" aria-label="Funding information">
     <p>SCC community events are proudly funded by the <strong>Josiah Quincy School Association (JQSA)</strong>, made possible through the generous support of JQES families.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       UPCOMING EVENTS — Easy to update!
+       
+       To ADD a new event:  Copy an <article class="event-card"> block.
+         • Put it in "events-grid" to always show it.
+         • Put it in "events-more" to hide it behind the toggle.
+       To REMOVE an event:  Delete the entire <article>...</article> block.
+       
+       The first 2 events (in events-grid) are always visible.
+       The rest (in events-more) are collapsed behind a "Show More" button.
+       Update the button text count if you add/remove hidden events.
+       
+       Badge options:
+         class="event-badge event-badge-soon"     → orange "Coming Soon"
+         class="event-badge event-badge-upcoming"  → blue "Upcoming"
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="events-section" id="events" aria-labelledby="events-heading">
+    <div class="container">
+      <h2 class="section-title fade-up" id="events-heading">Upcoming Events</h2>
+      <p class="section-subtitle fade-up">Mark your calendars — here's what's coming up next!</p>
+
+      <div class="events-grid">
+
+        <!-- ── EVENT 1: School Site Council Meeting ── -->
+        <article class="event-card event-card-featured fade-up">
+          <div class="event-date" aria-label="March 13">
+            <span class="month">Mar</span>
+            <span class="day">13</span>
+          </div>
+          <div class="event-details">
+            <span class="event-badge event-badge-soon">Coming Soon</span>
+            <h4>School Site Council (SSC) Meeting</h4>
+            <div class="event-host">Contact: Heidi Boulogne</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                8:00 – 9:00 AM
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+                Via Zoom (Meeting ID: 852 6637 7469)
+              </span>
+            </div>
+            <p class="event-description">Join us for an open SSC meeting where school budget, policies, and priorities are discussed. All families and staff are welcome to attend and listen in — this is a great way to stay informed about the decisions that shape our school. Join easily from home via Zoom.</p>
+            <div class="event-links">
+              <a class="event-link" href="https://k12-bostonpublicschools.zoom.us/j/85266377469" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+                Join Zoom Meeting
+              </a>
+              <a class="event-link" href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWVuOWRrbjAwa2tuMmVjZXFlM2NndDNyYTggam9zaWFocXVpbmN5cGFyZW50Y291bmNpbEBt&tmsrc=josiahquincyparentcouncil%40gmail.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                Add to Calendar
+              </a>
+              <a class="event-link" href="https://jqes.org" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                JQES SSC Page
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── EVENT 2: STEAM Night ── -->
+        <article class="event-card fade-up">
+          <div class="event-date" aria-label="March 19">
+            <span class="month">Mar</span>
+            <span class="day">19</span>
+          </div>
+          <div class="event-details">
+            <span class="event-badge event-badge-soon">Coming Soon</span>
+            <h4>STEAM Night</h4>
+            <div class="event-host">A fun evening for the whole family</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Evening Event
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                JQES
+              </span>
+            </div>
+            <p class="event-description">Bring the kids for a hands-on evening of Science, Technology, Engineering, Arts, and Math! Explore interactive activities led by teachers and community partners — a great night of learning, creativity, and fun for all grade levels.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ── Collapsible: remaining events ── -->
+      <div class="events-more" id="events-more">
+
+        <!-- ── EVENT 3: Coffee Hour ── -->
+        <article class="event-card fade-up">
+          <div class="event-date" aria-label="April 10">
+            <span class="month">Apr</span>
+            <span class="day">10</span>
+          </div>
+          <div class="event-details">
+            <span class="event-badge event-badge-upcoming">Upcoming</span>
+            <h4>Coffee Hour</h4>
+            <div class="event-host">All families welcome</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Morning
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                JQES
+              </span>
+            </div>
+            <p class="event-description">Stop by for coffee and conversation! A relaxed morning to meet other families, chat with teachers and school leadership, and share your thoughts. A great chance to connect and be heard in a welcoming, informal setting.</p>
+          </div>
+        </article>
+
+        <!-- ── EVENT 4: Teacher Appreciation Week ── -->
+        <article class="event-card fade-up">
+          <div class="event-date event-date-range" aria-label="May 4 through 8">
+            <span class="month">May</span>
+            <span class="day">4</span>
+            <span class="date-sep">–</span>
+            <span class="day">8</span>
+          </div>
+          <div class="event-details">
+            <span class="event-badge event-badge-upcoming">Upcoming</span>
+            <h4>Teacher Appreciation Week</h4>
+            <div class="event-host">Celebrating our amazing JQES staff</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Week-long celebration
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                JQES
+              </span>
+            </div>
+            <p class="event-description">Help us show our teachers and staff how much they mean to our community! Highlights include a special bao bun treat on Tuesday, and a potluck with pastries and gift giveaway on Friday. Stay tuned for ways to get involved and show your appreciation.</p>
+          </div>
+        </article>
+
+        <!-- ── EVENT 5: "This Is Us" – International Day of Play ── -->
+        <article class="event-card fade-up">
+          <div class="event-date" aria-label="June 11">
+            <span class="month">Jun</span>
+            <span class="day">11</span>
+          </div>
+          <div class="event-details">
+            <span class="event-badge event-badge-upcoming">Upcoming</span>
+            <h4>"This Is Us" — International Day of Play</h4>
+            <div class="event-host">A school-wide celebration for all families</div>
+            <div class="event-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                International Day of Play
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                JQES
+              </span>
+            </div>
+            <p class="event-description">A joyful end-of-year celebration of our community! Enjoy games, performances, music, and activities that celebrate the diversity and spirit of JQES families. Come play, connect, and make memories together.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Toggle button -->
+      <button class="events-toggle fade-up" id="events-toggle" aria-expanded="false" aria-controls="events-more">
+        <span>Show 3 More Events</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
   </section>
 
   <!-- Calendar -->
@@ -671,9 +1020,9 @@
   </div>
   <div class="footer-name">Josiah Quincy Elementary <span class="accent">SCC</span></div>
   <p>Email us questions, ideas, or feedback — we'd love to hear from you!</p>
-  <a href="/cdn-cgi/l/email-protection#f892978b919990898d91969b8188998a9d968c9b978d969b9194b89f95999194d69b9795" class="footer-email">
+  <a href="mailto:josiahquincyparentcouncil@gmail.com" class="footer-email">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    <span class="__cf_email__" data-cfemail="8be1e4f8e2eae3fafee2e5e8f2fbeaf9eee5ffe8e4fee5e8e2e7cbece6eae2e7a5e8e4e6">[email&#160;protected]</span>
+    josiahquincyparentcouncil@gmail.com
   </a>
   <div class="footer-bottom">Made with care by the JQES School Community Council</div>
 </footer>
@@ -695,7 +1044,22 @@
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   }
 
-});
+  // ── Events toggle (show/hide extra events) ──
+  const eventsToggle = document.getElementById('events-toggle');
+  const eventsMore = document.getElementById('events-more');
+  if (eventsToggle && eventsMore) {
+    eventsToggle.addEventListener('click', function() {
+      const isExpanded = eventsMore.classList.toggle('expanded');
+      eventsToggle.classList.toggle('expanded');
+      eventsToggle.setAttribute('aria-expanded', isExpanded);
+      eventsToggle.querySelector('span').textContent = isExpanded ? 'Show Fewer Events' : 'Show 3 More Events';
+      // Trigger fade-in for newly visible cards
+      if (isExpanded) {
+        eventsMore.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
+      }
+    });
+  }
+
 </script>
 </body>
 </html>
