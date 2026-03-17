@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Summer Camps 2026 · JQES Community Resource</title>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:    #E00827;
+  --red-dk: #B80620;
+  --orange: #E8651A;
+  --blue:   #118CCD;
+  --gray:   #919191;
+  --gray-lt:#F4F4F4;
+  --white:  #FFFFFF;
+  --text:   #1C1C1C;
+  --border: #E0E0E0;
+
+  --cat-daycamp:   #118CCD;
+  --cat-arts:      #DB2777;
+  --cat-sports:    #E8651A;
+  --cat-nature:    #16A34A;
+  --cat-perf:      #7C3AED;
+  --cat-academic:  #B45309;
+  --cat-cultural:  #0D9488;
+  --cat-community: #E00827;
+  --cat-stem:      #4F46E5;
+  --cat-dance:     #BE185D;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito Sans',Avenir,sans-serif;background:var(--gray-lt);color:var(--text);min-height:100vh;}
+
+/* ── HEADER ── */
+header{background:var(--red-dk);color:white;padding:0;}
+.header-top-bar{background:var(--red);padding:6px 40px;display:flex;align-items:center;gap:12px;}
+.header-top-bar span{font-size:0.72rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.85);}
+.header-top-bar .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.4);}
+.header-main{padding:36px 40px 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.header-left h1{font-family:'Calistoga',serif;font-size:clamp(2rem,4.5vw,3.2rem);line-height:1.05;letter-spacing:-0.01em;}
+.header-left h1 .accent{color:#FCD34D;}
+.header-left p{margin-top:8px;font-size:0.9rem;color:rgba(255,255,255,0.7);max-width:520px;line-height:1.5;}
+.header-stats{display:flex;gap:12px;flex-wrap:wrap;}
+.stat-chip{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:12px 18px;text-align:center;min-width:90px;}
+.stat-chip .n{font-family:'Calistoga',serif;font-size:1.8rem;color:#FCD34D;line-height:1;}
+.stat-chip .l{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.07em;color:rgba(255,255,255,0.6);margin-top:3px;}
+
+/* ── CONTROLS ── */
+.controls-wrap{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:2px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,0.07);}
+.controls-inner{max-width:1260px;margin:0 auto;padding:14px 40px 0;}
+.search-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.search-box{flex:1;min-width:200px;position:relative;}
+.search-box svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--gray);pointer-events:none;}
+.search-box input{width:100%;padding:10px 12px 10px 40px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.875rem;background:var(--gray-lt);outline:none;transition:border-color .15s;}
+.search-box input:focus{border-color:var(--blue);}
+.search-box input::placeholder{color:var(--gray);}
+select{padding:9px 30px 9px 11px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.82rem;background:var(--gray-lt);outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%23919191' d='M0 0l5 7 5-7z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;cursor:pointer;transition:border-color .15s;}
+select:focus{border-color:var(--blue);}
+.add-btn{padding:9px 18px;background:var(--orange);color:white;border:none;border-radius:8px;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;transition:background .15s;}
+.add-btn:hover{background:#d45b15;}
+.results-bar{font-size:0.78rem;color:var(--gray);padding:8px 0 0;}
+.results-bar strong{color:var(--text);}
+
+/* ── PILLS ── */
+.pills-row{max-width:1260px;margin:0 auto;padding:10px 40px 12px;display:flex;gap:7px;flex-wrap:wrap;}
+.pill{padding:5px 13px;border-radius:99px;font-size:0.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--gray);transition:all .15s;white-space:nowrap;user-select:none;}
+.pill:hover{color:var(--text);border-color:#ccc;}
+.pill.active{color:white;border-color:transparent;}
+.pill[data-cat="all"].active{background:var(--red-dk);}
+.pill[data-cat="Day Camp"].active{background:var(--cat-daycamp);}
+.pill[data-cat="Arts & Creative"].active{background:var(--cat-arts);}
+.pill[data-cat="Sports & Athletics"].active{background:var(--cat-sports);}
+.pill[data-cat="Nature & Outdoor"].active{background:var(--cat-nature);}
+.pill[data-cat="Performing Arts"].active{background:var(--cat-perf);}
+.pill[data-cat="Academic"].active{background:var(--cat-academic);}
+.pill[data-cat="Cultural & Language"].active{background:var(--cat-cultural);}
+.pill[data-cat="Community/Free"].active{background:var(--cat-community);}
+.pill[data-cat="STEM"].active{background:var(--cat-stem);}
+.pill[data-cat="Dance & Movement"].active{background:var(--cat-dance);}
+
+/* ── GRID ── */
+.grid-wrap{max-width:1260px;margin:0 auto;padding:22px 40px 60px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(310px,100%),1fr));gap:18px;}
+
+/* ── CARD ── */
+.card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:transform .17s,box-shadow .17s,border-color .17s;text-decoration:none;color:inherit;cursor:pointer;}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.13);border-color:var(--red);}
+.card-bar{height:4px;flex-shrink:0;}
+.card-body{padding:18px 20px 16px;flex:1;display:flex;flex-direction:column;}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.card-name{font-family:'Calistoga',serif;font-size:1rem;line-height:1.25;color:var(--text);flex:1;display:flex;align-items:baseline;gap:5px;}
+.link-icon{font-size:0.7rem;color:var(--blue);opacity:0;transition:opacity .15s;font-style:normal;flex-shrink:0;}
+.card:hover .link-icon{opacity:1;}
+.badges-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.cbadge{font-size:0.67rem;font-weight:600;padding:2px 8px;border-radius:5px;}
+.free-tag{background:#D1FAE5;color:#065F46;font-size:0.67rem;font-weight:700;padding:2px 8px;border-radius:5px;flex-shrink:0;margin-top:1px;}
+.ext-tag{background:#FEF3C7;color:#92400E;font-size:0.67rem;font-weight:700;padding:2px 8px;border-radius:5px;flex-shrink:0;margin-top:1px;}
+.card-desc{font-size:0.8rem;color:#555;line-height:1.55;margin-bottom:12px;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.meta{border-top:1px solid var(--border);padding-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.mi{display:flex;flex-direction:column;gap:1px;}
+.ml{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray);}
+.mv{font-size:0.77rem;font-weight:500;color:var(--text);line-height:1.3;}
+.mi.full{grid-column:1/-1;}
+.contact-link{color:var(--blue);text-decoration:none;font-size:0.77rem;}
+.contact-link:hover{text-decoration:underline;}
+
+/* ── NO RESULTS ── */
+.no-results{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--gray);}
+.no-results h3{font-family:'Calistoga',serif;font-size:1.4rem;color:var(--text);margin-bottom:8px;}
+
+/* ── ADD CAMP MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:16px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.2);}
+.modal-header{background:var(--red-dk);color:white;padding:22px 28px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between;}
+.modal-header h2{font-family:'Calistoga',serif;font-size:1.4rem;}
+.modal-header p{font-size:0.8rem;color:rgba(255,255,255,0.7);margin-top:3px;}
+.modal-close{background:rgba(255,255,255,0.15);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
+.modal-close:hover{background:rgba(255,255,255,0.25);}
+.modal-body{padding:24px 28px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group.full{grid-column:1/-1;}
+.form-group label{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);}
+.form-group label .req{color:var(--red);}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.875rem;outline:none;transition:border-color .15s;background:var(--gray-lt);color:var(--text);}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);background:var(--white);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%23919191' d='M0 0l5 7 5-7z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+.cat-checkboxes{display:flex;flex-wrap:wrap;gap:8px;}
+.cat-check{display:flex;align-items:center;gap:5px;padding:5px 10px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;transition:all .15s;font-size:0.78rem;font-weight:500;user-select:none;}
+.cat-check input{width:14px;height:14px;accent-color:var(--blue);cursor:pointer;}
+.cat-check:hover{border-color:var(--blue);color:var(--blue);}
+.form-section-title{font-family:'Calistoga',serif;font-size:1rem;color:var(--red-dk);margin:20px 0 12px;padding-top:16px;border-top:1px solid var(--border);}
+.modal-footer{padding:16px 28px 24px;display:flex;gap:10px;justify-content:flex-end;}
+.btn-cancel{padding:10px 20px;background:var(--gray-lt);border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;color:var(--gray);transition:all .15s;}
+.btn-cancel:hover{border-color:#ccc;color:var(--text);}
+.btn-add{padding:10px 24px;background:var(--orange);color:white;border:none;border-radius:8px;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.875rem;font-weight:700;cursor:pointer;transition:background .15s;}
+.btn-add:hover{background:#d45b15;}
+.toast{position:fixed;bottom:32px;right:32px;background:var(--text);color:white;padding:12px 20px;border-radius:10px;font-size:0.875rem;font-weight:500;z-index:300;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.new-badge{background:#FEF9C3;color:#854D0E;font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid #FDE047;}
+
+@media(max-width:700px){
+  /* ── Spacing ── */
+  header .header-main,.controls-inner,.pills-row,.grid-wrap{padding-left:16px;padding-right:16px;}
+  .header-top-bar{padding:6px 16px;font-size:0.65rem;}
+
+  /* ── Header ── */
+  .header-main{flex-direction:column;align-items:flex-start;padding:24px 16px 20px;}
+  .header-left h1{font-size:2rem;}
+  .header-stats{width:100%;justify-content:flex-start;}
+  .stat-chip{min-width:75px;padding:10px 14px;}
+  .stat-chip .n{font-size:1.5rem;}
+
+  /* ── Spreadsheet link bar ── */
+  .header-main+div{flex-direction:column;align-items:flex-start;gap:8px;padding:10px 16px;}
+
+  /* ── Controls: stack everything ── */
+  .controls-inner{padding:12px 16px 0;}
+  .search-row{flex-direction:column;align-items:stretch;gap:8px;}
+  .search-box{min-width:0;}
+  select{width:100%;padding:10px 30px 10px 11px;}
+  .add-btn{width:100%;justify-content:center;padding:11px 18px;}
+  .results-bar{padding:6px 0 0;}
+
+  /* ── Pills: horizontally scrollable ── */
+  .pills-row{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:10px 16px 10px;gap:6px;scrollbar-width:none;}
+  .pills-row::-webkit-scrollbar{display:none;}
+  .pill{flex-shrink:0;font-size:0.72rem;padding:5px 11px;}
+
+  /* ── Grid ── */
+  .grid{grid-template-columns:1fr;gap:14px;}
+  .grid-wrap{padding:16px 16px 48px;}
+
+  /* ── Cards ── */
+  .card-name{font-size:0.95rem;}
+  .card-desc{-webkit-line-clamp:4;}
+  .meta{grid-template-columns:1fr 1fr;}
+  .mv{font-size:0.75rem;}
+
+  /* ── Modal ── */
+  .modal-overlay{padding:12px;}
+  .modal{max-height:95vh;}
+  .modal-header{padding:18px 20px;}
+  .modal-header h2{font-size:1.2rem;}
+  .modal-body{padding:16px 20px;}
+  .modal-footer{padding:12px 20px 20px;flex-direction:column-reverse;}
+  .btn-cancel,.btn-add{width:100%;text-align:center;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full{grid-column:1;}
+  .cat-checkboxes{gap:6px;}
+  .cat-check{font-size:0.75rem;padding:4px 8px;}
+
+  /* ── Toast ── */
+  .toast{left:16px;right:16px;bottom:20px;text-align:center;}
+}
+
+@media(max-width:480px){
+  .filter-selects{flex-direction:column;}
+  select{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top-bar">
+    <span>Josiah Quincy Elementary School</span>
+    <div class="dot"></div>
+    <span>Community Resource · Summer 2026</span>
+  </div>
+  <div class="header-main">
+    <div class="header-left">
+      <h1>Boston Summer<br>Camps <span class="accent">2026</span></h1>
+      <p>A community resource for JQES families — search and filter programs across the city. Updated for 2026.</p>
+    </div>
+    <div class="header-stats">
+      <div class="stat-chip"><div class="n" id="total-stat">56</div><div class="l">Programs</div></div>
+      <div class="stat-chip"><div class="n" id="free-stat">11</div><div class="l">Free / Low-Cost</div></div>
+      <div class="stat-chip"><div class="n" id="ext-stat">8</div><div class="l">Extended Day</div></div>
+    </div>
+  </div>
+  <div style="background:rgba(255,255,255,0.08);border-top:1px solid rgba(255,255,255,0.12);padding:10px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <span style="font-size:0.8rem;color:rgba(255,255,255,0.65);">Also available as a spreadsheet:</span>
+    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqTaazxwe-m7OJCPrF9v8OUkVyZ3LjrUcVpxkzy2mSPXtYvOoj5kKTMlRvr9Vb7A/pubhtml" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;background:#34A853;color:white;font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.8rem;font-weight:700;padding:7px 15px;border-radius:7px;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='#2d9248'" onmouseout="this.style.background='#34A853'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-2h5v2zm5-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      View as Google Spreadsheet ↗
+    </a>
+  </div>
+</header>
+
+<!-- CONTROLS -->
+<div class="controls-wrap">
+  <div class="controls-inner">
+    <div class="search-row">
+      <div class="search-box">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search" placeholder="Search by name, activity, neighborhood…" oninput="filter()">
+      </div>
+      <select id="age-f" onchange="filter()">
+        <option value="">All Ages</option>
+        <option value="toddler">Toddlers (2–4)</option>
+        <option value="early">Early Childhood (3–6)</option>
+        <option value="elem">Elementary (5–12)</option>
+        <option value="middle">Middle School (11–15)</option>
+        <option value="teen">Teen (13+)</option>
+      </select>
+      <select id="cost-f" onchange="filter()">
+        <option value="">All Costs</option>
+        <option value="free">Free / Low-Cost</option>
+        <option value="paid">Paid Programs</option>
+      </select>
+      <select id="ext-f" onchange="filter()">
+        <option value="">Extended Day: Any</option>
+        <option value="yes">Extended Day Available</option>
+      </select>
+      <button class="add-btn" onclick="openModal()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Add Camp
+      </button>
+    </div>
+    <div class="results-bar" id="results-bar">Showing <strong>56</strong> programs</div>
+  </div>
+  <div class="pills-row">
+    <button class="pill active" data-cat="all" onclick="setCat('all',this)">All Programs</button>
+    <button class="pill" data-cat="Day Camp" onclick="setCat('Day Camp',this)">🏕 Day Camp</button>
+    <button class="pill" data-cat="Arts & Creative" onclick="setCat('Arts & Creative',this)">🎨 Arts</button>
+    <button class="pill" data-cat="Sports & Athletics" onclick="setCat('Sports & Athletics',this)">⚽ Sports</button>
+    <button class="pill" data-cat="Nature & Outdoor" onclick="setCat('Nature & Outdoor',this)">🌿 Nature</button>
+    <button class="pill" data-cat="Performing Arts" onclick="setCat('Performing Arts',this)">🎭 Performing Arts</button>
+    <button class="pill" data-cat="Academic" onclick="setCat('Academic',this)">📚 Academic</button>
+    <button class="pill" data-cat="Cultural & Language" onclick="setCat('Cultural & Language',this)">🌏 Cultural & Language</button>
+    <button class="pill" data-cat="Community/Free" onclick="setCat('Community/Free',this)">🤝 Community/Free</button>
+    <button class="pill" data-cat="STEM" onclick="setCat('STEM',this)">🔬 STEM</button>
+    <button class="pill" data-cat="Dance & Movement" onclick="setCat('Dance & Movement',this)">💃 Dance & Movement</button>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="grid-wrap">
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- ADD CAMP MODAL -->
+<div class="modal-overlay" id="modal" onclick="overlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2>Add a New Camp</h2>
+        <p>Fill in the details below — the camp will appear in the directory instantly.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Camp / Program Name <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="e.g. Roxbury YMCA Day Camp">
+        </div>
+        <div class="form-group full">
+          <label>Short Description <span class="req">*</span></label>
+          <textarea id="f-desc" placeholder="2–3 sentences describing the program, activities, and who it's for…"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Cost / Pricing</label>
+          <input type="text" id="f-cost" placeholder="e.g. $350/week · Financial aid available">
+        </div>
+        <div class="form-group">
+          <label>Ages Served</label>
+          <input type="text" id="f-ages" placeholder="e.g. 6–12">
+        </div>
+        <div class="form-group">
+          <label>Age Range — Min</label>
+          <input type="number" id="f-agemin" placeholder="e.g. 6" min="0" max="25">
+        </div>
+        <div class="form-group">
+          <label>Age Range — Max</label>
+          <input type="number" id="f-agemax" placeholder="e.g. 12" min="0" max="25">
+        </div>
+        <div class="form-group full">
+          <label>Program Dates</label>
+          <input type="text" id="f-dates" placeholder="e.g. July 6 – August 14, 2026">
+        </div>
+        <div class="form-group">
+          <label>Hours</label>
+          <input type="text" id="f-hours" placeholder="e.g. 9:00am – 3:00pm">
+        </div>
+        <div class="form-group">
+          <label>Extended Day Available?</label>
+          <select id="f-ext">
+            <option value="—">Unknown / N/A</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Registration Info / Deadline</label>
+          <input type="text" id="f-reg" placeholder="e.g. Opens March 4 · Register at tenacity.org">
+        </div>
+        <div class="form-group">
+          <label>Contact Email</label>
+          <input type="text" id="f-contact" placeholder="e.g. info@campname.org">
+        </div>
+        <div class="form-group">
+          <label>Website URL</label>
+          <input type="text" id="f-url" placeholder="e.g. https://campname.org">
+        </div>
+        <div class="form-group">
+          <label>Free or Low-Cost?</label>
+          <select id="f-free">
+            <option value="no">No — Paid Program</option>
+            <option value="yes">Yes — Free / Low-Cost</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section-title">Categories <span style="font-family:'Nunito Sans',Avenir,sans-serif;font-size:0.75rem;color:var(--gray);font-weight:400">(select all that apply)</span></div>
+      <div class="cat-checkboxes" id="cat-checks">
+        <label class="cat-check"><input type="checkbox" value="Day Camp"> Day Camp</label>
+        <label class="cat-check"><input type="checkbox" value="Arts & Creative"> Arts & Creative</label>
+        <label class="cat-check"><input type="checkbox" value="Sports & Athletics"> Sports & Athletics</label>
+        <label class="cat-check"><input type="checkbox" value="Nature & Outdoor"> Nature & Outdoor</label>
+        <label class="cat-check"><input type="checkbox" value="Performing Arts"> Performing Arts</label>
+        <label class="cat-check"><input type="checkbox" value="Academic"> Academic</label>
+        <label class="cat-check"><input type="checkbox" value="Cultural & Language"> Cultural & Language</label>
+        <label class="cat-check"><input type="checkbox" value="Community/Free"> Community / Free</label>
+        <label class="cat-check"><input type="checkbox" value="STEM"> STEM</label>
+        <label class="cat-check"><input type="checkbox" value="Dance & Movement"> Dance & Movement</label>
+      </div>
+    </div>
+    <div style="padding:0 28px 4px;font-size:0.75rem;color:var(--gray);">Adding a camp will also open your email client with a pre-filled message to <strong>josiahquincyparentcouncil@gmail.com</strong> so it can be reviewed for permanent inclusion.</div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-add" onclick="addCamp()">Add &amp; Send Email ✉</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CAT_COLOR = {
+  "Day Camp":"#118CCD","Arts & Creative":"#DB2777","Sports & Athletics":"#E8651A",
+  "Nature & Outdoor":"#16A34A","Performing Arts":"#7C3AED","Academic":"#B45309",
+  "Cultural & Language":"#0D9488","Community/Free":"#E00827","STEM":"#4F46E5",
+  "Dance & Movement":"#BE185D"
+};
+const CAT_BG = {
+  "Day Camp":"#EFF6FF","Arts & Creative":"#FDF2F8","Sports & Athletics":"#FFF7ED",
+  "Nature & Outdoor":"#F0FDF4","Performing Arts":"#F5F3FF","Academic":"#FFFBEB",
+  "Cultural & Language":"#F0FDFA","Community/Free":"#FEF2F2","STEM":"#EEF2FF",
+  "Dance & Movement":"#FDF2F8"
+};
+
+let camps = [
+  {name:"You Got It Girl (YGIG)",cost:"Contact for pricing",ages:"Girls 6–16",ageRange:[6,16],description:"Building confidence, leadership, and resilience through basketball and wellness. Daily basketball training, yoga & mindfulness, leadership development, social skills, and a fun empowering environment for girls. Affiliated with Boston Public Schools.",dates:"July 6 – August 7, 2026",registration:"Register online via Google Form (link on card) · Questions: Sjeter@bostonpublicschools.org",hours:"8:30am – 4:00pm",extendedDay:"—",categories:["Sports & Athletics"],free:false,contact:"Sjeter@bostonpublicschools.org",url:"https://docs.google.com/forms/d/e/1FAIpQLSfU6ppSiWlQ8qLTtq3Xt2uFI72rQN-wx1YFRvdeUBQPQTQwCg/viewform",isNew:true},
+  {name:"Girl Scouts Day Camp (Cedar Hill, Waltham)",cost:"$520 · Financial aid available",ages:"5–12 (K–12th grade)",ageRange:[5,17],description:"At historic Camp Cedar Hill in Waltham, campers explore wooded hiking trails, spot wildlife, and cool off in the pool—some units even paddle a canoe across the pond. Theme weeks, campfire cooking, sing-alongs, and crafts. Bus transportation included.",dates:"See 2026 Camp Guide for session dates",registration:"Registration open — gsema.org",hours:"9am–4pm (extended care 7:30–9am & 4–6pm available)",extendedDay:"Yes",categories:["Day Camp","Nature & Outdoor"],free:false,url:"https://www.gsema.org/en/activities-and-camp/summer-camp/day.html"},
+  {name:"Minni Summer Program – Beacon Hill",cost:"$600/week",ages:"4–10",ageRange:[4,10],description:"Eleven individually themed weeks of art + design programming led by professional teaching artists. Each week explores a new creative theme through hands-on projects, outdoor art-making, and field trips to local galleries and studios.",dates:"June 22 – September 3, 2026",registration:"January 15 — minni.space",hours:"9am–3pm Mon–Thu (extended day until 5pm available)",extendedDay:"Yes",categories:["Arts & Creative"],free:false,url:"https://minni.space/summer-program-beacon-hill"},
+  {name:"Minni × Urbanity Dance – South End",cost:"$825/week",ages:"4–11",ageRange:[4,11],description:"Urbanity Dance and Minni team up for a joyful blend of movement and art. Ages 4–7 (Movers + Makers) and 6–11 (Dynamic Designers) split their session between Urbanity's dance programming and Minni's art and design projects. Half-day sessions combinable for a full day.",dates:"June 15–19, June 22–26, July 13–17, July 20–24, Aug 24–28, Aug 31–Sept 4",registration:"January 15 — minni.space",hours:"9am–12:30pm or 1pm–4:30pm (extended day until 5:30pm available)",extendedDay:"Yes",categories:["Arts & Creative","Dance & Movement"],free:false,url:"https://minni.space/2026-summer-program-urbanity"},
+  {name:"Wang YMCA Day Camp",cost:"Non-Member $431 · Member $361",ages:"5–6",ageRange:[5,6],description:"Encourage life-long learning through literacy, creative arts, sports, games, field trips, and swimming. Builds positive relationships, leadership skills, and self-esteem in a safe, caring environment.",dates:"June 23 – August 22",registration:"January 15 at 12:00 PM — ymcaboston.org",hours:"7:30am – 5:30pm",extendedDay:"Yes",categories:["Day Camp"],free:false,url:"https://ymcaboston.org/youth-and-family/camps/day-camps/"},
+  {name:"Hill House Day Camp",cost:"$575/week · Extended day $710/week",ages:"5–12",ageRange:[5,12],description:"Action-packed summer in downtown Beacon Hill with weekly field trips. Campers make art at the Firehouse, splash at the spray deck, play on the Esplanade, and choose from sports, theater, STEM, art, or music in the afternoons.",dates:"June 15 – August 27, 2026",registration:"Jan 20 (returning) / Jan 22 (community) at 10am — hillhouseboston.org",hours:"9am – 4pm",extendedDay:"Yes",categories:["Day Camp"],free:false,url:"https://www.hillhouseboston.org/Camps/Summer_Day_Camp.htm"},
+  {name:"Hill House Kiddie Kamp",cost:"$415/week",ages:"3–5",ageRange:[3,5],description:"The perfect combination of exciting new experiences and a safe, familiar environment. Beloved counselors guide campers through games, crafts, stories, songs, age-appropriate athletics, and outdoor fun on the Esplanade. Children must be potty trained.",dates:"June 15 – August 21, 2026",registration:"Jan 20 (returning) / Jan 22 (community) at 10am — hillhouseboston.org",hours:"8:30am – 1:30pm",extendedDay:"No",categories:["Day Camp"],free:false,url:"https://www.hillhouseboston.org/Camps/Summer_Kiddie_Kamp.htm"},
+  {name:"Wheelock Family Theatre Camp",cost:"$525/week · $1,050/2 weeks · $1,575/3 weeks · Beforecare $10/day or $50/wk · Aftercare $15/day or $75/wk · Tuition assistance available",ages:"Pre-K – 12th grade",ageRange:[4,17],description:"Award-winning theatre education at Boston University's Fenway Campus (200 The Riverway). Programs range from circus arts, improv, and story drama for young children to full musical productions, acting intensives, and Theatre Design & Tech for teens. Summer 2026 productions include Honk! Jr. (grades 4–8), Madagascar Jr. (grades 4–8), A Year with Frog and Toad KIDS (grades 1–3), Lion King KIDS, and All Shook Up (high school). Beforecare (8am) and aftercare (until 5pm) available.",dates:"June 22 – August 14, 2026 · Weekly, 2-week, and 3-week programs available",registration:"Registration open — wheelockfamilytheatre.org/education-summer-classes",hours:"9:00am – 3:30pm (teen intensives 10:30am – 5:00pm) · Beforecare from 8am · Aftercare until 5pm",extendedDay:"Yes",categories:["Performing Arts","Arts & Creative"],free:false,url:"https://www.wheelockfamilytheatre.org/education-summer-classes/"},
+,
+  {name:"Kwong Kow Chinese School Summer Camp",cost:"Full Day $375/wk · Half Day $250/wk",ages:"5–13 (K–G8)",ageRange:[5,13],description:"A blend of language immersion and cultural enrichment helping children explore Mandarin Chinese, arts, and traditional customs through hands-on activities, performances, and community learning. 8-week session.",dates:"July 3 – August 25",registration:"January — check website",hours:"8:30am – 5:00pm",extendedDay:"—",categories:["Cultural & Language","Academic"],free:false,url:"https://www.kwongkow.org/"},
+  {name:"Rock Spot Climbing Camp",cost:"Check website for pricing · Discounts: $20 off/week for members, siblings & multi-week bookings",ages:"6+ (no experience required)",ageRange:[6,14],description:"Week-long indoor climbing adventure camp at Rock Spot South Boston. Each day includes climbing instruction, climbing games, team building, outdoor games, and crafts. Campers leave with a handmade tie dye Rock Spot shirt. Max 10 participants per session. Half-day morning (9am–12:30pm) and afternoon (12:30–4pm) options also available. No climbing experience needed — all equipment provided.",dates:"Weekly sessions throughout summer, starting June 22, 2026 · Mon–Fri",registration:"Registration open — climber.hellocapitan.com/rockspot",hours:"Full day: 9:00am – 4:00pm · Morning: 9:00am – 12:30pm · Afternoon: 12:30pm – 4:00pm",extendedDay:"—",categories:["Sports & Athletics"],free:false,contact:"questions@rockspotclimbing.com · (617) 269-2084",url:"https://climber.hellocapitan.com/rockspot/schedule/events/95/?event_types=2469"},
+,
+  {name:"French Library Summer in French",cost:"Check website for weekly rates · 10% Early Bird discount (by March 31) · 5% multi-week/sibling discount",ages:"3–4, 5–6, 7–9, and Teens 12–15",ageRange:[3,15],description:"Award-winning full French immersion summer program at the French Library in Back Bay (53 Marlborough St). Native and bilingual teachers lead themed weekly sessions with games, songs, art, outdoor activities at nearby playgrounds and Boston Common. Four age groups: 3–4 (with nap option), 5–6, 7–9, and Teens 12–15. Teens must have at least A1+ French and take a placement test. Half-day (9:30am–12:30pm) and full-day (9:30am–4:30pm) options available. No prior French required for ages 3–9.",dates:"Starting June 22, 2026 · Weekly sessions through August",registration:"Registration open — frenchlibrary.org/summer-in-french · Call 617.912.0400 for multi-week enrollment",hours:"Half day: 9:30am – 12:30pm · Full day: 9:30am – 4:30pm",extendedDay:"—",categories:["Cultural & Language","Academic"],free:false,contact:"youthprograms@frenchlibrary.org · 617.912.0400",url:"https://frenchlibrary.org/summer-in-french/"},
+,
+  {name:"Red Sox Summer Camp",cost:"$715/week (World Series Experience) · Sibling & Little League discounts available",ages:"Rising K – Rising 8th grade (boys & girls, all skill levels)",ageRange:[5,14],description:"Young fans learn the game and celebrate Red Sox tradition at multiple Greater Boston locations. Each week-long session includes a day at Fenway Park, a meet-and-greet with a current or alumni Red Sox player, an autographed photo, an official camp uniform (jersey, pants, hat, socks, belt), and access to a Camp Alumni Game ticket. Small-group hitting and fielding lessons available as an add-on. Multiple locations across Greater Boston.",dates:"June 22–26 (Belmont) · July 6–10 (Newton) · July 13–17 (Cambridge/Danehy Park) · July 20–24 (Beverly) · July 27–31 (W. Roxbury/Roxbury Latin) · Aug 3–7 (Lexington)",registration:"Registration open — redsoxcamps.leagueapps.com",hours:"8:45am – 2:45pm (morning extended day from 8am · afternoon extended day until 6pm available)",extendedDay:"Yes",categories:["Sports & Athletics"],free:false,contact:"info@redsoxcamps.com",url:"https://www.mlb.com/redsox/fans/baseball-camps"},
+,
+  {name:"Boston Outdoor Preschool Network",cost:"Check website",ages:"3–6",ageRange:[3,6],description:"Nature is the classroom at this outdoor, play-based camp where young children explore the natural world, build independence, and develop social-emotional skills in local parks and green spaces.",dates:"Check website",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["Nature & Outdoor"],free:false,url:"https://www.bostonoutdoorpreschool.org/"},
+  {name:"Mass Audubon Chickadees Nature Camp (Milton)",cost:"Sliding scale: $103–$515/week depending on income tier · Child Members get additional discounts",ages:"4.5–6",ageRange:[4,6],description:"A nature-packed week-long day camp at the Norman Smith Environmental Education Center in Milton. Young explorers discover wildlife, hike trails, and engage in hands-on outdoor science. Sliding-scale pricing (5 tiers) makes it accessible for all families. Bus service available from Boston.",dates:"July 27 – July 31, 2026 (Mon–Fri) · Check website for additional sessions",registration:"Register at massaudubon.org · Check website for all session dates",hours:"8:30am – 3:30pm",extendedDay:"—",categories:["Nature & Outdoor"],free:false,contact:"bluehillscamp@massaudubon.org · 617-804-7506",url:"https://www.massaudubon.org/programs/blue-hills/100729-blue-hills-nature-camp-chickadees"},
+,
+  {name:"Ellis School Summer Program",cost:"Check website",ages:"5–12",ageRange:[5,12],description:"A nurturing, play-based summer program focused on learning through fun. Themed weeks filled with creative activities, outdoor play, and enriching experiences rooted in early childhood development.",dates:"Check website",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["Day Camp"],free:false,url:"https://www.theellisschool.org/"},
+  {name:"Everwood Day Camp",cost:"1 Session (2 wks): $1,890 ($1,590 Session 1) · 2 Sessions: $3,780 · 3 Sessions: $5,485 · 4 Sessions: $6,850 · Full Summer (9 wks): $7,350 · Early bird 5% off",ages:"4–15",ageRange:[4,15],description:"Set on the shores of Lake Massapoag, Everwood offers a classic summer camp experience with swimming, sports, arts, boating, and team-building activities. Offers flexible 2-week sessions that can be combined for 4, 6, or 8 weeks, plus a Post Week add-on in August.",dates:"Session 1: June 22 – July 2 (closed July 3) · Session 2: July 6–17 · Session 3: July 20–31 · Session 4: Aug 3–14 · Post Week (add-on only): Aug 17–21",registration:"Enroll at everwooddaycamp.com/dates-enrollment",hours:"Check website",extendedDay:"—",categories:["Day Camp"],free:false,url:"https://everwooddaycamp.com/dates-enrollment/"},
+,
+  {name:"Warrior Ice Arena (Boston Bruins Practice Facility)",cost:"Check website",ages:"6–14",ageRange:[6,14],description:"Cool off this summer with skating and hockey camps at the Boston Bruins' practice facility! Expert coaching, games, and fun challenges in a world-class arena setting.",dates:"Check website",registration:"January — check website",hours:"Check website",extendedDay:"—",categories:["Sports & Athletics"],free:false,url:"https://www.warrioricearena.com/"},
+  {name:"ACCESS Chinatown",cost:"Free",ages:"K–5th grade",ageRange:[5,11],description:"A free, community-based summer program in the heart of Chinatown offering academic support, cultural enrichment, and activities connecting youth to their heritage. Includes Bible lessons, field trips, and fitness activities.",dates:"Check website",registration:"Email ep@chinatownaccess.org to apply",hours:"Check website",extendedDay:"—",categories:["Cultural & Language","Community/Free"],free:true,contact:"ep@chinatownaccess.org",url:"https://www.accessboston.org/"},
+  {name:"Acera – MA School of Science, Creativity & Leadership",cost:"Cost varies · Scholarships available",ages:"8–14",ageRange:[8,14],description:"A hands-on, STEAM-focused camp where curious minds dive into coding, robotics, art, and biology. Perfect for young innovators who love to tinker and explore. Week-long classes over 8 weeks.",dates:"Check website",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["STEM"],free:false,url:"https://www.aceraschool.org/summer"},
+  {name:"Agassiz Village (Overnight, Poland ME)",cost:"Cost varies",ages:"8–13",ageRange:[8,13],description:"Located on a lake in Maine, this overnight camp combines swimming, sports, and campfires with a mission to build leadership and confidence for underserved youth.",dates:"Check website",registration:"Check website",hours:"Overnight",extendedDay:"—",categories:["Nature & Outdoor"],free:false,url:"https://agassizvillage.org/"},
+  {name:"B-SAFE — St. Stephen's Youth Programs",cost:"$450 (with public assistance) · $600 (full pay) · Sibling discounts",ages:"Grades 1–8",ageRange:[5,14],description:"A vibrant five-week day program serving Boston youth with academics, arts, field trips, and community-building. July 7–August 8, 8:30am–4pm, Mon–Fri. Includes meals daily. Rooted in equity, joy, and strong mentorship.",dates:"July 7 – August 8, 2026",registration:"Registration opens April 3, 2026 — ssypboston.org",hours:"8:30am – 4:00pm",extendedDay:"—",categories:["Community/Free","Academic"],free:false,url:"https://www.ssypboston.org/bsafe"},
+  {name:"Summer at BB&N (Buckingham Browne & Nichols)",cost:"Cost varies · Financial aid available",ages:"4 years – 12th grade",ageRange:[4,18],description:"BB&N provides a valuable summer experience for campers from 4 years old through rising 12th grade. The school embraces diversity in staff, campers, families, and curriculum. Week-long day camps on a beautiful Cambridge campus.",dates:"Check website",registration:"Check website — bbns.org",hours:"Check website",extendedDay:"—",categories:["Day Camp"],free:false,url:"https://www.bbns.org/summer"},
+  {name:"Boston Children's Chorus Summer Camp",cost:"$550 · Financial aid available",ages:"Check website",ageRange:[6,18],description:"Activities include singing, dancing, ukulele, art-making, storytelling, and excursions! The week culminates with a Friday evening concert open to the public.",dates:"Check website — dates not yet listed",registration:"bostonchildrenschorus.org",hours:"Check website",extendedDay:"—",categories:["Performing Arts"],free:false,url:"https://www.bostonchildrenschorus.org/"},
+  {name:"Boston Explorers",cost:"Based on income",ages:"7–15",ageRange:[7,15],description:"Visit the tops of tall buildings, explore Boston Harbor Islands, discover secret spaces, learn about Boston's history, build things with your hands, and enjoy lots of free play.",dates:"Check website",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["Nature & Outdoor","Community/Free"],free:false,url:"https://bostonexplorers.org/"},
+  {name:"Boston University – Summer Reading Skills Programs",cost:"Varies",ages:"4–18",ageRange:[4,18],description:"Offered through BU's Metropolitan College. Summer reading support meeting 1x/week, available virtually or in-person. Designed to address summer learning loss.",dates:"Check website",registration:"Check website — bu.edu",hours:"1x/week (virtual or in-person)",extendedDay:"—",categories:["Academic"],free:false,url:"https://www.bu.edu/lsoe/"},
+  {name:"Bowdoin Street Health Center Summer Wellness",cost:"Patients $10–$20/yr · Non-patients $15–$25/yr",ages:"All ages",ageRange:[0,99],description:"A low-cost summer program keeping kids active and learning through cooking classes, gardening, and basketball. Fostering healthy lifestyles and community engagement.",dates:"Check website",registration:"Check website",hours:"10:30am – 1:00pm",extendedDay:"—",categories:["Community/Free"],free:true,url:"https://bowdoinstreet.org/"},
+  {name:"Camp Shriver at UMass Boston",cost:"Free (after $25 registration fee)",ages:"8–12",ageRange:[8,12],description:"A free inclusive summer sports camp where children with and without intellectual and developmental disabilities play and grow together. Equal enrollment. Held at UMass Mount Ida Campus in Newton. Application deadline March 31.",dates:"July 6 – July 31, 2026",registration:"Application deadline March 31 — umb.edu",hours:"8:30am – 2:00pm",extendedDay:"—",categories:["Sports & Athletics","Community/Free"],free:true,url:"https://www.umb.edu/csde/camp-shriver-community/camp-shriver/"},
+  {name:"Camp Harborview",cost:"Free",ages:"Entering grades 6–9",ageRange:[11,15],description:"Since 2007, thousands of Boston middle-schoolers have spent transformative summers on Long Island in Boston Harbor. Classic camp activities plus leadership, arts, athletics, aquatics, and STEM. All meals, transportation, and activities free. Boston residents only.",dates:"Session 1: June 29–July 16 (closed July 3)\nSession 2: July 20–August 6\nSession 3: August 10–August 21",registration:"Feb 2 (returning) / Feb 23 (new) — campharborview.org",hours:"~7:30am – 5:00pm",extendedDay:"—",categories:["Day Camp","Community/Free"],free:true,url:"https://campharborview.org/summer-camp/"},
+  {name:"Camp Joy (BCYF – Boston residents)",cost:"$275 first child · $80 each sibling · $350 agency fee",ages:"3–15 (youth with disabilities + siblings)",ageRange:[3,15],description:"A BCYF program for children with disabilities and their siblings. Recreation, arts, and enrichment activities build friendships, confidence, and independence. Must be a Boston resident.",dates:"July 14 – August 8 (Mon–Fri, 8am–2pm, location TBD)",registration:"Registration open — contact BCYF",hours:"8:00am – 2:00pm",extendedDay:"—",categories:["Community/Free"],free:false,url:"https://www.boston.gov/departments/boston-centers-youth-families"},
+  {name:"Castle Square – Square Roots Summer Program",cost:"CSTO Residents $75/mo · Community $170/mo · EEC/CCCB vouchers accepted",ages:"6–13 (Grades K2–8)",ageRange:[6,13],description:"An EEC-licensed summer learning program in the South End combining academic support, art, technology, and physical education. Bilingual staff, college volunteer tutors. Holistic approach bridging home, school, and community.",dates:"6-week summer program, Mon–Fri, 9:00am–5:00pm (exact 2026 dates TBD)",registration:"cstoboston.org",hours:"9:00am – 5:00pm",extendedDay:"—",categories:["Community/Free","Academic"],free:false,url:"https://www.cstoboston.org/square-roots"},
+  {name:"Charles River School Summer Programs (Dover)",cost:"Cost varies · Financial aid available",ages:"Various (ages 3–14 by program)",ageRange:[3,14],description:"Summer camp on a scenic 16-acre campus in Dover, MA blending outdoor adventure, creative arts, science, and sports. Themed weekly sessions in a warm, nurturing environment led by experienced educators.",dates:"Check website",registration:"charlesriverschool.org",hours:"Check website",extendedDay:"—",categories:["Day Camp"],free:false,url:"https://www.charlesriverschool.org/summer"},
+  {name:"CitySprouts Summer Green Team",cost:"Free · Daily lunch provided",ages:"Rising 5th–8th graders",ageRange:[10,14],description:"A free outdoor program for rising 5th–8th graders focused on gardening, environmental science, and teamwork in community green spaces across Boston.",dates:"Check website",registration:"citysprouts.org",hours:"Check website",extendedDay:"—",categories:["Nature & Outdoor","Community/Free"],free:true,url:"https://citysprouts.org/"},
+  {name:"Club48 @ USES",cost:"Full pay $360/wk · $720/2-week session · Vouchers available",ages:"Check website",ageRange:[5,14],description:"Full-day STEAM-focused camp. Activities include entrepreneur skill-building, cooking, and field trips. Subsidized and full-pay slots available.",dates:"Check website",registration:"Contact kcoffin@uses.org or (617) 375-8119",hours:"Full day",extendedDay:"—",categories:["STEM","Academic"],free:false,contact:"kcoffin@uses.org",url:"https://usesboston.org/"},
+  {name:"Community Boat Building – Junior Sailing",cost:"Sliding scale $1–$425 (payment plans available)",ages:"10–17 (must swim 50 yards)",ageRange:[10,17],description:"Kids from all walks of life experience the joys of sailing while making lifelong friends. Also opportunities for paddling, windsurfing, and leadership development. Accessible for all income levels.",dates:"Check website",registration:"communityboatbuilding.org",hours:"Check website",extendedDay:"—",categories:["Sports & Athletics","Nature & Outdoor"],free:false,url:"https://communityboatbuilding.org/youth/"},
+  {name:"Crossroads Summer Camps (Duxbury & Brewster)",cost:"$100 registration fee · Reduced/waived options available",ages:"2nd–8th grade",ageRange:[7,14],description:"Overnight camps in Duxbury and Brewster, MA offering outdoor adventures, swim lessons, biking, arts, and leadership development.",dates:"Check website",registration:"Check website",hours:"Overnight",extendedDay:"—",categories:["Nature & Outdoor"],free:false,url:"https://crossroadscamp.org/"},
+  {name:"East Boston Social Centers – Bright Minds Program",cost:"Sliding scale based on family income",ages:"5–14",ageRange:[5,14],description:"Engaging and safe Out of School-Time and summer programming at East Boston Social Centers. An affordable, trusted option for East Boston youth to learn, develop, and have fun.",dates:"Check website",registration:"Contact saccenrollment@ebsoc.org",hours:"Check website",extendedDay:"—",categories:["Community/Free"],free:false,contact:"saccenrollment@ebsoc.org",url:"https://ebsoc.org/"},
+  {name:"Experience Camps (Grief Camp, Maine)",cost:"Free · Application required",ages:"Entering grades 4–11",ageRange:[9,17],description:"A free, one-week overnight camp in Maine for children grieving the loss of a parent, sibling, or caregiver. Healing, connection, and fun in a safe and supportive environment.",dates:"Check website",registration:"experiencecamps.org",hours:"Overnight (one week)",extendedDay:"—",categories:["Community/Free"],free:true,url:"https://experiencecamps.org/"},
+  {name:"Explore It! – Boston Children's Museum",cost:"$600/week · Scholarships available",ages:"Entering grades K–2",ageRange:[5,8],description:"Week-long day camps at Boston Children's Museum. Kids form friendships through hands-on activities, imagination, and play. Each week features mostly different activities — up to 3 weeks allowed.",dates:"Check website",registration:"bostonchildrensmuseum.org",hours:"Check website",extendedDay:"—",categories:["Academic","STEM"],free:false,url:"https://www.bostonchildrensmuseum.org/"},
+  {name:"Hale Education / Camp Hale (Sandwich, NH)",cost:"Sliding scale based on family income",ages:"5–17",ageRange:[5,17],description:"Overnight summer camp in Sandwich, NH offering outdoor activities including swimming, boating, and hiking. Multiple sessions from June through mid-August. Emphasis on personal growth and environmental stewardship. Sliding fee scale based on family income.",dates:"Sessions from June through mid-August",registration:"haleeducation.org",hours:"Check website",extendedDay:"—",categories:["Nature & Outdoor"],free:false,url:"https://haleeducation.org/"},
+  {name:"IDIIL Learning Center",cost:"TBD",ages:"5–12",ageRange:[5,12],description:"Academic enrichment programs focusing on math, reading, and writing. Summer programs aimed at enhancing students' academic skills. Located at 3606 Tremont St, Boston.",dates:"2026 dates TBD",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["Academic"],free:false,url:"https://idiillearningcenter.com/"},
+  {name:"KidzToPros STEM & Sports Camps",cost:"Cost varies",ages:"4–14",ageRange:[4,14],description:"STEM, arts, and sports summer camps focused on coding, robotics, and game design. Fosters creativity and critical thinking. Half-day options for younger children.",dates:"Typically 9:00am – 3:00pm",registration:"kidztopros.com",hours:"9:00am – 3:00pm",extendedDay:"—",categories:["STEM","Sports & Athletics"],free:false,url:"https://kidztopros.com/"},
+  {name:"LINX Summer Camps (Wellesley)",cost:"Cost varies",ages:"3–15",ageRange:[3,15],description:"Fun-filled, innovative summer programs in Wellesley including adventure, performing arts, sports, and STEAM activities with an emphasis on personal growth.",dates:"Flexible sessions; extended day available",registration:"Currently open — linxcamps.com",hours:"Full day",extendedDay:"Yes",categories:["Day Camp"],free:false,url:"https://linxcamps.com/"},
+  {name:"Little Panda Mandarin Immersion Camp",cost:"$2,400/session",ages:"4–8",ageRange:[4,8],description:"A Mandarin immersion summer camp featuring music, martial arts, and cultural exploration. Two 4-week sessions offered, Monday–Friday.",dates:"Two 4-week sessions (check website)",registration:"Check website",hours:"8:30am – 5:30pm",extendedDay:"—",categories:["Cultural & Language"],free:false,url:"https://www.littlepandachildcare.com/"},
+  {name:"MIT All Sports Summer Day Camp",cost:"Varies by week",ages:"6–13",ageRange:[6,13],description:"MIT's All Sports Summer Day Camp offers children the opportunity to engage in various sports, promoting physical fitness and teamwork on the MIT campus.",dates:"Check website",registration:"Registration for 2026 now open — mit.edu",hours:"Check website",extendedDay:"—",categories:["Sports & Athletics"],free:false,url:"https://athletics.mit.edu/sports-camps/all-sports-summer-day-camp/"},
+  {name:"Northeastern University – Math Masters",cost:"$2,300",ages:"Entering 2nd–6th grade",ageRange:[7,12],description:"Evidence-based small-group math instruction with daily enrichment. Curriculum-based assessments, ongoing progress monitoring. Morning or afternoon sessions. Parents receive a detailed progress report.",dates:"July 6–9 · July 13–16 · July 20–23 · July 27–30 (Mon–Thu)",registration:"Rolling admission — bouve.northeastern.edu",hours:"9:00am–12:30pm (AM) or 1:00–4:30pm (PM)",extendedDay:"—",categories:["Academic"],free:false,url:"https://bouve.northeastern.edu/clinics/speech-language-and-hearing-center/math-masters-summer-program/"},
+  {name:"PBHA / Chinatown Adventure",cost:"$125 first child · $100 each additional · Waivers available",ages:"6–13",ageRange:[6,13],description:"A 6-week program serving Boston's Chinatown community with academic enrichment in the mornings and educational field trips, cultural, and service-learning workshops in the afternoons. Includes two overnight camping trips.",dates:"Check website — pbha.org/sup",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["Cultural & Language","Community/Free"],free:false,url:"https://pbha.org/sup"},
+  {name:"Piers Park Sailing Center",cost:"$0–$200 · Need-based",ages:"6+",ageRange:[6,18],description:"Inclusive sailing and marine science programs for youth. About one-third of participants are sailors with cognitive or physical disabilities. Science of Sailing (10+) and Harbor Explorers (6–9).",dates:"Check website",registration:"piersparksailing.org",hours:"9:00am – 4:00pm",extendedDay:"—",categories:["Sports & Athletics","Nature & Outdoor"],free:false,url:"https://piersparksailing.org/"},
+  {name:"Red Oak Summer Program",cost:"$120–$360/week · Sliding fee scale",ages:"5–13",ageRange:[5,13],description:"Licensed out-of-school time care promoting children's growth through literacy and arts in a multicultural and multilingual environment. Run by Boston Chinatown Neighborhood Center (BCNC). Both private tuition and publicly subsidized slots available.",dates:"Check website",registration:"Contact Kathy.Choi@bcnc.net",hours:"8:30am – 6:00pm",extendedDay:"Yes",categories:["Community/Free","Academic"],free:false,contact:"Kathy.Choi@bcnc.net",url:"https://www.bcnc.net/"},
+  {name:"Steve & Kate's Camp",cost:"Day/weekly/summer passes · Sibling discounts · Financial aid available",ages:"4–12",ageRange:[4,12],description:"A unique summer experience where children choose their own activities — coding, sewing, baking, sports — campers are in control. Locations in Hyde Park, Fenway, and Somerville.",dates:"Check website (varies by location)",registration:"steveandkatescamp.com",hours:"Check website",extendedDay:"—",categories:["Day Camp"],free:false,url:"https://steveandkatescamp.com/"},
+  {name:"Sunset Point Camps (Hull, MA)",cost:"Cost varies · Deadline June 1",ages:"6–14",ageRange:[6,14],description:"A rec camp in Hull, MA run by Catholic Charities of Boston with options for day camp or overnight. Swimming, boating, team sports, arts and crafts, and academic support.",dates:"Sessions June through mid-August",registration:"Check website",hours:"Check website",extendedDay:"—",categories:["Day Camp"],free:false,url:"https://www.ccab.org/programs/sunset-point-camp/"},
+  {name:"Tenacity – Summer Tennis & Reading Program",cost:"Free · Registration opens March 4, 2026 at 8:00am",ages:"6–15",ageRange:[6,15],description:"Free tennis and reading program running July 6–August 14 at parks across Boston. Tennis instruction combined with reading activities for Boston, Worcester, and Chelsea residents.",dates:"July 6 – August 14, 2026",registration:"Opens March 4, 2026 — tenacity.org",hours:"Morning: 9am–12pm (ages 6–10) · Afternoon: 1pm–3:45pm (ages 10–15)",extendedDay:"—",categories:["Sports & Athletics","Academic","Community/Free"],free:true,url:"https://tenacity.org/summer-tennis-reading-program-boston/"},
+  {name:"West End House Summer Camp",cost:"Free (includes breakfast, lunch & snack)",ages:"7–18",ageRange:[7,18],description:"No-cost summer camp for boys offering sports, water activities, and STEM experiments with a focus on character building and inclusion. 105 Allston St., 1 block from Green Line (66 & 57 bus).",dates:"Tentative: June 24 – August 16, 2026",registration:"westendhouse.org",hours:"8:30am – 6:00pm",extendedDay:"—",categories:["Day Camp","Community/Free"],free:true,contact:"jnute@westendhouse.org",url:"https://www.westendhouse.org/programs/summer-camp/"},
+  {name:"YMCA Summer Camps @ Wang YMCA",cost:"Cost varies",ages:"5–13",ageRange:[5,13],description:"Day camp programs with literacy, creative arts, games, field trips, and swimming. Golden Mountain Camp Jr (ages 5–6) and Golden Mountain Camp (ages 7–13). Sessions June 29–Sept 1.",dates:"June 29 – September 1",registration:"ymcaboston.org/CAMPS",hours:"7:30am – 5:30pm",extendedDay:"Yes",categories:["Day Camp"],free:false,url:"https://ymcaboston.org/youth-and-family/camps/day-camps/"}
+];
+
+let activeCat = 'all';
+
+function isFree(c){return c.free||c.cost.toLowerCase().includes('free')||c.cost.toLowerCase().includes('no cost');}
+function ageMatch(c,f){
+  const [mn,mx]=c.ageRange;
+  if(!f) return true;
+  if(f==='toddler') return mn<=4;
+  if(f==='early')   return mn<=6&&mx>=3;
+  if(f==='elem')    return mn<=12&&mx>=5;
+  if(f==='middle')  return mn<=15&&mx>=11;
+  if(f==='teen')    return mx>=13;
+  return true;
+}
+
+function setCat(cat,el){
+  activeCat=cat;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  filter();
+}
+
+function filter(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const af=document.getElementById('age-f').value;
+  const cf=document.getElementById('cost-f').value;
+  const ef=document.getElementById('ext-f').value;
+  const list=camps.filter(c=>{
+    if(activeCat!=='all'&&!c.categories.includes(activeCat)) return false;
+    if(!ageMatch(c,af)) return false;
+    if(cf==='free'&&!isFree(c)) return false;
+    if(cf==='paid'&&isFree(c)) return false;
+    if(ef==='yes'&&c.extendedDay!=='Yes') return false;
+    if(q){
+      const s=[c.name,c.description,c.categories.join(' '),c.ages,c.dates,c.contact||''].join(' ').toLowerCase();
+      if(!s.includes(q)) return false;
+    }
+    return true;
+  });
+  renderGrid(list);
+  document.getElementById('results-bar').innerHTML=`Showing <strong>${list.length}</strong> of ${camps.length} programs`;
+}
+
+function renderGrid(list){
+  const g=document.getElementById('grid');
+  if(!list.length){
+    g.innerHTML=`<div class="no-results"><h3>No camps found</h3><p>Try adjusting your search or filters.</p></div>`;
+    return;
+  }
+  g.innerHTML=list.map(c=>{
+    const pc=c.categories[0];
+    const col=CAT_COLOR[pc]||'#888';
+    const bg=CAT_BG[pc]||'#f9f9f9';
+    const freeBadge=isFree(c)?`<span class="free-tag">FREE</span>`:'';
+    const extBadge=c.extendedDay==='Yes'?`<span class="ext-tag">+ Extended Day</span>`:'';
+    const newBadge=c.isNew?`<span class="new-badge">NEW</span>`:'';
+    const catBadges=c.categories.map(cat=>`<span class="cbadge" style="background:${CAT_BG[cat]||'#eee'};color:${CAT_COLOR[cat]||'#555'}">${cat}</span>`).join('');
+    const tagRow=[freeBadge,extBadge,newBadge].filter(Boolean).join('');
+    const href=c.url||'#';
+    const target=c.url&&!c.url.startsWith('mailto')?' target="_blank" rel="noopener noreferrer"':'';
+    const linkIcon=c.url?`<span class="link-icon" title="Visit website">↗</span>`:'';
+    return `<a class="card" href="${href}"${target}>
+      <div class="card-bar" style="background:${col}"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-name">${c.name}${linkIcon}</div>
+          ${tagRow?`<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0">${tagRow}</div>`:''}
+        </div>
+        <div class="badges-row">${catBadges}</div>
+        <div class="card-desc">${c.description}</div>
+        <div class="meta">
+          <div class="mi"><span class="ml">Ages</span><span class="mv">${c.ages}</span></div>
+          <div class="mi"><span class="ml">Cost</span><span class="mv">${c.cost}</span></div>
+          <div class="mi full"><span class="ml">Dates</span><span class="mv">${c.dates.replace(/\n/g,'<br>')}</span></div>
+          <div class="mi"><span class="ml">Hours</span><span class="mv">${c.hours}</span></div>
+          <div class="mi"><span class="ml">Registration</span><span class="mv">${c.registration}</span></div>
+          ${c.contact?`<div class="mi full"><span class="ml">Contact</span><span class="mv">${c.contact}</span></div>`:''}
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+// ── MODAL ──
+function openModal(){document.getElementById('modal').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+function overlayClick(e){if(e.target===document.getElementById('modal'))closeModal();}
+
+function addCamp(){
+  const name=document.getElementById('f-name').value.trim();
+  const desc=document.getElementById('f-desc').value.trim();
+  if(!name||!desc){showToast('Please fill in at least Name and Description.');return;}
+  const cats=[...document.querySelectorAll('#cat-checks input:checked')].map(i=>i.value);
+  if(!cats.length){showToast('Please select at least one category.');return;}
+
+  const cost    = document.getElementById('f-cost').value.trim()||'Check website';
+  const ages    = document.getElementById('f-ages').value.trim()||'Check website';
+  const agemin  = parseInt(document.getElementById('f-agemin').value)||0;
+  const agemax  = parseInt(document.getElementById('f-agemax').value)||99;
+  const dates   = document.getElementById('f-dates').value.trim()||'Check website';
+  const reg     = document.getElementById('f-reg').value.trim()||'Check website';
+  const hours   = document.getElementById('f-hours').value.trim()||'Check website';
+  const ext     = document.getElementById('f-ext').value;
+  const freeVal = document.getElementById('f-free').value==='yes';
+  const contact = document.getElementById('f-contact').value.trim()||null;
+  let url = document.getElementById('f-url').value.trim()||null;
+  if(url&&!url.startsWith('http')&&!url.startsWith('mailto')) url='https://'+url;
+
+  const newCamp={name,cost,ages,ageRange:[agemin,agemax],description:desc,dates,registration:reg,hours,extendedDay:ext,categories:cats,free:freeVal,contact,url,isNew:true};
+  camps.unshift(newCamp);
+
+  // ── Send email via mailto ──
+  const subject = encodeURIComponent(`[JQES Camps 2026] New submission: ${name}`);
+  const body = encodeURIComponent(
+`A new camp has been submitted to the JQES Boston Summer Camps 2026 directory.
+Please review and add it to the master spreadsheet if appropriate.
+
+──────────────────────────────
+CAMP NAME:      ${name}
+CATEGORIES:     ${cats.join(', ')}
+AGES:           ${ages} (range: ${agemin}–${agemax})
+COST:           ${cost}
+FREE/LOW-COST:  ${freeVal ? 'Yes' : 'No'}
+──────────────────────────────
+DATES:          ${dates}
+HOURS:          ${hours}
+EXTENDED DAY:   ${ext}
+──────────────────────────────
+REGISTRATION:   ${reg}
+CONTACT:        ${contact||'Not provided'}
+──────────────────────────────
+DESCRIPTION:
+${desc}
+──────────────────────────────
+
+Submitted via the JQES Summer Camps 2026 interactive directory.`
+  );
+  window.open(`mailto:josiahquincyparentcouncil@gmail.com?subject=${subject}&body=${body}`,'_blank');
+
+  // Update stats
+  document.getElementById('total-stat').textContent=camps.length;
+  document.getElementById('free-stat').textContent=camps.filter(isFree).length;
+  document.getElementById('ext-stat').textContent=camps.filter(c=>c.extendedDay==='Yes').length;
+
+  // Reset form
+  document.getElementById('f-name').value='';
+  document.getElementById('f-desc').value='';
+  document.getElementById('f-cost').value='';
+  document.getElementById('f-ages').value='';
+  document.getElementById('f-agemin').value='';
+  document.getElementById('f-agemax').value='';
+  document.getElementById('f-dates').value='';
+  document.getElementById('f-hours').value='';
+  document.getElementById('f-reg').value='';
+  document.getElementById('f-contact').value='';
+  document.getElementById('f-url').value='';
+  document.getElementById('f-free').value='no';
+  document.getElementById('f-ext').value='—';
+  document.querySelectorAll('#cat-checks input').forEach(i=>i.checked=false);
+  closeModal();
+  activeCat='all';
+  document.querySelectorAll('.pill').forEach(p=>{p.classList.remove('active');if(p.dataset.cat==='all')p.classList.add('active');});
+  filter();
+  showToast(`✓ "${name}" added! Your email client should open with a pre-filled message to the Parent Council.`);
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+// Init
+renderGrid(camps);
+document.getElementById('total-stat').textContent=camps.length;
+document.getElementById('free-stat').textContent=camps.filter(isFree).length;
+document.getElementById('ext-stat').textContent=camps.filter(c=>c.extendedDay==='Yes').length;
+document.getElementById('results-bar').innerHTML=`Showing <strong>${camps.length}</strong> programs`;
+</script>
+</body>
+</html>
