@@ -380,27 +380,31 @@ select:focus{border-color:var(--blue);}
       <button class="btn-add" onclick="addCamp()">Prepare Email ✉</button>
     </div>
 
-    <!-- Email panel — always rendered, populated on submit -->
+    <!-- Output panel — always rendered, populated on submit -->
     <div id="email-panel" style="padding:0 28px 24px;">
+
+      <!-- Section 1: Email -->
       <div style="border:2px solid #e0d8d0;border-radius:10px;overflow:hidden;">
-        <div style="background:var(--red-dk);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
-          <span style="font-weight:700;font-size:0.85rem;">📧 Your submission email</span>
-          <span style="font-size:0.72rem;opacity:0.85;">To: josiahquincyparentcouncil@gmail.com</span>
+        <div style="background:var(--red-dk);color:#fff;padding:10px 16px;">
+          <span style="font-weight:700;font-size:0.85rem;">📧 Your submission email — copy or open in your email app</span>
         </div>
         <div style="padding:12px 14px 8px;background:#FFF8F0;">
-          <div style="font-size:0.7rem;color:var(--gray);font-weight:700;letter-spacing:0.04em;margin-bottom:3px;">SUBJECT</div>
-          <div id="email-subject-display" style="font-size:0.82rem;margin-bottom:10px;font-weight:500;min-height:18px;font-style:italic;color:var(--gray);">Click "Prepare Email" above to generate your message.</div>
-          <div style="font-size:0.7rem;color:var(--gray);font-weight:700;letter-spacing:0.04em;margin-bottom:4px;">MESSAGE — copy this and paste into any email service</div>
-          <textarea id="email-body-display" readonly placeholder="Your ready-to-send message will appear here after clicking Prepare Email above." style="width:100%;height:200px;font-family:monospace;font-size:0.73rem;line-height:1.55;border:1px solid #ddd;border-radius:6px;padding:10px;resize:vertical;background:#fff;color:#444;box-sizing:border-box;"></textarea>
-        </div>
-        <div style="padding:8px 14px 10px;background:#FFF8F0;display:flex;gap:8px;flex-wrap:wrap;">
-          <button onclick="copyEmail()" id="copy-btn" style="flex:1;min-width:130px;padding:10px 0;background:var(--red-dk);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;">📋 Copy to Clipboard</button>
-          <button onclick="openMailto()" id="mailto-btn" style="flex:1;min-width:130px;padding:10px 0;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;">✉ Open in Email App</button>
-        </div>
-        <div style="padding:2px 14px 10px;background:#FFF8F0;font-size:0.7rem;color:var(--gray);line-height:1.5;">
-          <strong>Using Gmail, Outlook, or webmail?</strong> Click <em>Copy</em>, open your email service, start a new email to <strong>josiahquincyparentcouncil@gmail.com</strong>, paste, and send.
+          <div style="font-size:0.7rem;color:var(--gray);font-weight:700;letter-spacing:0.04em;margin-bottom:2px;">TO</div>
+          <div style="font-size:0.82rem;color:#333;margin-bottom:8px;">josiahquincyparentcouncil@gmail.com</div>
+          <div style="font-size:0.7rem;color:var(--gray);font-weight:700;letter-spacing:0.04em;margin-bottom:2px;">SUBJECT</div>
+          <div id="email-subject-display" style="font-size:0.82rem;margin-bottom:10px;font-weight:500;min-height:18px;font-style:italic;color:var(--gray);">Fill in the form above and click Prepare Email ↑</div>
+          <div style="font-size:0.7rem;color:var(--gray);font-weight:700;letter-spacing:0.04em;margin-bottom:4px;">MESSAGE</div>
+          <textarea id="email-body-display" readonly placeholder="Your message will appear here after clicking Prepare Email…" style="width:100%;height:170px;font-family:monospace;font-size:0.73rem;line-height:1.55;border:1px solid #ddd;border-radius:6px;padding:10px;resize:vertical;background:#fff;color:#444;box-sizing:border-box;"></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <button onclick="copyEmail()" id="copy-btn" style="flex:1;min-width:130px;padding:10px 0;background:var(--red-dk);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;">📋 Copy Message</button>
+            <button onclick="openMailto()" style="flex:1;min-width:130px;padding:10px 0;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;">✉ Open in Email App</button>
+          </div>
+          <div style="font-size:0.7rem;color:var(--gray);margin-top:6px;line-height:1.5;">No email app? Copy → open Gmail or Outlook → new email to <strong>josiahquincyparentcouncil@gmail.com</strong> → paste → send.</div>
         </div>
       </div>
+
+
+
     </div>
   </div>
 </div>
@@ -574,30 +578,30 @@ function openModal(){
   // Reset email panel
   document.getElementById('email-body-display').value='';
   const subEl=document.getElementById('email-subject-display');
-  subEl.textContent='Click "Prepare Email" above to generate your message.';
+  subEl.textContent='Fill in the form and click Prepare Email ↑';
   subEl.style.fontStyle='italic';
   subEl.style.color='var(--gray)';
-  document.getElementById('copy-btn').textContent='📋 Copy to Clipboard';
+  document.getElementById('copy-btn').textContent='📋 Copy Message';
   // Scroll modal back to top
   document.querySelector('.modal').scrollTop=0;
 }
 function copyEmail(){
   const ta=document.getElementById('email-body-display');
-  ta.select();
-  ta.setSelectionRange(0,99999);
-  try{
-    navigator.clipboard.writeText(ta.value).then(()=>{
-      const btn=document.getElementById('copy-btn');
-      btn.textContent='✅ Copied!';
-      setTimeout(()=>{btn.textContent='📋 Copy to Clipboard';},2500);
-    });
-  }catch(e){
-    document.execCommand('copy');
+  const text=ta.value;
+  if(!text)return;
+  navigator.clipboard.writeText(text).then(()=>{
     const btn=document.getElementById('copy-btn');
     btn.textContent='✅ Copied!';
-    setTimeout(()=>{btn.textContent='📋 Copy to Clipboard';},2500);
-  }
+    setTimeout(()=>{btn.textContent='📋 Copy Message';},2500);
+  }).catch(()=>{
+    ta.select();ta.setSelectionRange(0,99999);document.execCommand('copy');
+    const btn=document.getElementById('copy-btn');
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.textContent='📋 Copy Message';},2500);
+  });
 }
+
+
 function openMailto(){
   window.open(`mailto:josiahquincyparentcouncil@gmail.com?subject=${window._emailSubject}&body=${window._emailBody}`,'_blank');
 }
@@ -627,6 +631,8 @@ function addCamp(){
   const newCamp={name,cost,ages,ageRange:[agemin,agemax],description:desc,dates,registration:reg,hours,extendedDay:ext,categories:cats,free:freeVal,contact,url,isNew:true};
   // ── Send email via mailto (camp will be added by Parent Council after review) ──
   const subject = encodeURIComponent(`[JQES Camps 2026] New submission: ${name}`);
+  const excelRow = [name,cost,ages,dates,hours,ext,reg,contact||'',cats.join(', '),freeVal?'Yes':'No',desc,url||''].join('\t');
+
   const body = encodeURIComponent(
 `A new camp has been submitted to the JQES Boston Summer Camps 2026 directory.
 Please review and add it to the master spreadsheet if appropriate.
@@ -644,10 +650,18 @@ EXTENDED DAY:   ${ext}
 ──────────────────────────────
 REGISTRATION:   ${reg}
 CONTACT:        ${contact||'Not provided'}
+WEBSITE:        ${url||'Not provided'}
 ──────────────────────────────
 DESCRIPTION:
 ${desc}
-──────────────────────────────
+
+══════════════════════════════
+📊 TO ADD TO EXCEL SPREADSHEET:
+Columns: Name | Cost | Ages | Dates | Hours | Ext.Day | Registration | Contact | Categories | Free? | Description | Website
+Copy the row below and paste into the first empty cell in column A:
+
+${excelRow}
+══════════════════════════════
 
 Submitted via the JQES Summer Camps 2026 interactive directory.`
   );
@@ -657,12 +671,14 @@ Submitted via the JQES Summer Camps 2026 interactive directory.`
   window._emailBodyRaw = decodeURIComponent(body);
   window._emailSubjectRaw = decodeURIComponent(subject);
 
-  // Show email preview panel
+  // Populate email tab
   const subEl = document.getElementById('email-subject-display');
   subEl.textContent = window._emailSubjectRaw;
   subEl.style.fontStyle = 'normal';
   subEl.style.color = '#222';
   document.getElementById('email-body-display').value = window._emailBodyRaw;
+
+
   // Scroll email panel into view
   // Reset form fields but keep modal open so user can see the email panel
   document.getElementById('f-name').value='';
