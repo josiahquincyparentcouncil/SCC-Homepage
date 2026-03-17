@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -259,7 +260,7 @@ select:focus{border-color:var(--blue);}
       </select>
       <button class="add-btn" onclick="openModal()">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-        Add Camp
+        Suggest a Camp
       </button>
     </div>
     <div class="results-bar" id="results-bar">Showing <strong>56</strong> programs</div>
@@ -290,7 +291,7 @@ select:focus{border-color:var(--blue);}
     <div class="modal-header">
       <div>
         <h2>Add a New Camp</h2>
-        <p>Fill in the details below — the camp will appear in the directory instantly.</p>
+        <p>Submit a camp for review — the Parent Council will add it to the directory after confirming details.</p>
       </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
@@ -371,10 +372,10 @@ select:focus{border-color:var(--blue);}
         <label class="cat-check"><input type="checkbox" value="Dance & Movement"> Dance & Movement</label>
       </div>
     </div>
-    <div style="padding:0 28px 4px;font-size:0.75rem;color:var(--gray);">Adding a camp will also open your email client with a pre-filled message to <strong>josiahquincyparentcouncil@gmail.com</strong> so it can be reviewed for permanent inclusion.</div>
+    <div style="padding:0 28px 4px;font-size:0.75rem;color:var(--gray);">Submitting will open your email client with a pre-filled message to the Parent Council. Once reviewed, the camp will be added to the directory by a Parent Council member.</div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-add" onclick="addCamp()">Add &amp; Send Email ✉</button>
+      <button class="btn-add" onclick="addCamp()">Submit for Review ✉</button>
     </div>
   </div>
 </div>
@@ -565,9 +566,7 @@ function addCamp(){
   if(url&&!url.startsWith('http')&&!url.startsWith('mailto')) url='https://'+url;
 
   const newCamp={name,cost,ages,ageRange:[agemin,agemax],description:desc,dates,registration:reg,hours,extendedDay:ext,categories:cats,free:freeVal,contact,url,isNew:true};
-  camps.unshift(newCamp);
-
-  // ── Send email via mailto ──
+  // ── Send email via mailto (camp will be added by Parent Council after review) ──
   const subject = encodeURIComponent(`[JQES Camps 2026] New submission: ${name}`);
   const body = encodeURIComponent(
 `A new camp has been submitted to the JQES Boston Summer Camps 2026 directory.
@@ -595,10 +594,7 @@ Submitted via the JQES Summer Camps 2026 interactive directory.`
   );
   window.open(`mailto:josiahquincyparentcouncil@gmail.com?subject=${subject}&body=${body}`,'_blank');
 
-  // Update stats
-  document.getElementById('total-stat').textContent=camps.length;
-  document.getElementById('free-stat').textContent=camps.filter(isFree).length;
-  document.getElementById('ext-stat').textContent=camps.filter(c=>c.extendedDay==='Yes').length;
+  // Stats unchanged — camp pending review by Parent Council
 
   // Reset form
   document.getElementById('f-name').value='';
@@ -619,7 +615,7 @@ Submitted via the JQES Summer Camps 2026 interactive directory.`
   activeCat='all';
   document.querySelectorAll('.pill').forEach(p=>{p.classList.remove('active');if(p.dataset.cat==='all')p.classList.add('active');});
   filter();
-  showToast(`✓ "${name}" added! Your email client should open with a pre-filled message to the Parent Council.`);
+  showToast(`✓ Submitted! Your email client should open with a message to the Parent Council for review.`);
 }
 
 function showToast(msg){
