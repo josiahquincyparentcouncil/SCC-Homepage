@@ -664,11 +664,7 @@ Submitted via the JQES Summer Camps 2026 interactive directory.`
   subEl.style.color = '#222';
   document.getElementById('email-body-display').value = window._emailBodyRaw;
   // Scroll email panel into view
-  document.getElementById('email-panel').scrollIntoView({behavior:'smooth', block:'nearest'});
-
-  // Stats unchanged — camp pending review by Parent Council
-
-  // Reset form
+  // Reset form fields but keep modal open so user can see the email panel
   document.getElementById('f-name').value='';
   document.getElementById('f-desc').value='';
   document.getElementById('f-cost').value='';
@@ -683,11 +679,9 @@ Submitted via the JQES Summer Camps 2026 interactive directory.`
   document.getElementById('f-free').value='no';
   document.getElementById('f-ext').value='—';
   document.querySelectorAll('#cat-checks input').forEach(i=>i.checked=false);
-  closeModal();
-  activeCat='all';
-  document.querySelectorAll('.pill').forEach(p=>{p.classList.remove('active');if(p.dataset.cat==='all')p.classList.add('active');});
-  filter();
-  showToast(`✓ Submitted! Your email client should open with a message to the Parent Council for review.`);
+
+  // Scroll email panel into view (inside the modal)
+  document.querySelector('.modal').scrollTo({top: document.getElementById('email-panel').offsetTop, behavior:'smooth'});
 }
 
 function showToast(msg){
