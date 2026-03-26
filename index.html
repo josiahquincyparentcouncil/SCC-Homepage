@@ -621,6 +621,7 @@
       letter-spacing: 0.04em;
       margin-bottom: 6px;
     }
+    .event-badge-today    { background: #fde8ec; color: #a30620; }
     .event-badge-upcoming { background: #e0f0fa; color: var(--blue-text); }
     .event-badge-soon { background: #fff3e0; color: #b35900; }
     .events-more {
@@ -1025,20 +1026,25 @@
       }
     }
 
+    // ── Parse "YYYY-MM-DD" as local midnight, not UTC midnight.
+    // new Date("2025-04-10") treats it as UTC and shifts back a day in ET — this avoids that.
+    function parseDateLocal(str) {
+      const [y, m, d] = str.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
     // ── Parse a Google Calendar event ──
     function parseEvent(item) {
       const isAllDay = !!item.start.date;
-      const startStr = item.start.dateTime || item.start.date;
-      const endStr = item.end.dateTime || item.end.date;
-      const start = new Date(startStr);
-      const end = new Date(endStr);
+      const start    = isAllDay ? parseDateLocal(item.start.date) : new Date(item.start.dateTime);
+      const end      = isAllDay ? parseDateLocal(item.end.date)   : new Date(item.end.dateTime);
 
       // For all-day events, end date is exclusive — subtract 1 day
-      const endDisplay = isAllDay ? new Date(end.getTime() - 86400000) : end;
+      const endDisplay = isAllDay ? new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1) : end;
 
       // Check if multi-day
       const startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-      const endDay = new Date(endDisplay.getFullYear(), endDisplay.getMonth(), endDisplay.getDate());
+      const endDay   = new Date(endDisplay.getFullYear(), endDisplay.getMonth(), endDisplay.getDate());
       const isMultiDay = endDay > startDay;
 
       // Build time string for timed events
@@ -1051,11 +1057,8 @@
       // Location from event
       const location = item.location || '';
 
-      // Description — take first sentence or first 160 chars
-      let description = item.description || '';
-      // Strip HTML tags
-      description = description.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
-      // Take first ~160 chars at a word boundary
+      // Description — strip HTML, truncate to ~160 chars
+      let description = (item.description || '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
       if (description.length > 160) {
         description = description.substring(0, 160).replace(/\s+\S*$/, '') + '…';
       }
@@ -1093,18 +1096,19 @@
         card.setAttribute('aria-label', `${evt.title} — open in Google Calendar`);
       }
 
-      // Badge
+      // Badge — week boundaries based on Sunday start
+      const today         = new Date(); today.setHours(0,0,0,0);
+      const evtDay        = new Date(evt.start); evtDay.setHours(0,0,0,0);
+      const dayOfWeek     = today.getDay(); // 0 = Sun
+      const endOfThisWeek = new Date(today); endOfThisWeek.setDate(today.getDate() + (6 - dayOfWeek));
+      const endOfNextWeek = new Date(endOfThisWeek); endOfNextWeek.setDate(endOfThisWeek.getDate() + 7);
+
       let badgeClass, badgeText;
-      if (evt.daysUntil <= 7) {
-        badgeClass = 'event-badge-soon';
-        badgeText = evt.daysUntil <= 0 ? 'Today' : evt.daysUntil === 1 ? 'Tomorrow' : 'This Week';
-      } else if (evt.daysUntil <= 14) {
-        badgeClass = 'event-badge-soon';
-        badgeText = 'Coming Soon';
-      } else {
-        badgeClass = 'event-badge-upcoming';
-        badgeText = 'Upcoming';
-      }
+      if (evt.daysUntil <= 0)          { badgeClass = 'event-badge-today';    badgeText = 'Today'; }
+      else if (evt.daysUntil === 1)     { badgeClass = 'event-badge-soon';     badgeText = 'Tomorrow'; }
+      else if (evtDay <= endOfThisWeek) { badgeClass = 'event-badge-soon';     badgeText = 'This Week'; }
+      else if (evtDay <= endOfNextWeek) { badgeClass = 'event-badge-soon';     badgeText = 'Next Week'; }
+      else                              { badgeClass = 'event-badge-upcoming'; badgeText = 'Upcoming'; }
 
       // Date block
       let dateHTML;
