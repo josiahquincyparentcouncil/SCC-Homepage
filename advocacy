@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Take Action | Josiah Quincy Elementary School Community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #E00827; --blue: #118CCD;
+    --bg: #FAF8F5; --cream: #FFF8F0; --light-gray: #F7F0E8;
+    --text: #1A1A1A; --text-muted: #5A5A5A; --border: #E0D8CE;
+    --font-heading: 'Calistoga', serif; --font-body: 'Nunito Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+  .site-header { background: #fff; border-bottom: 3px solid var(--red); padding: 14px 24px; display: flex; align-items: center; gap: 16px; }
+  .logo-mark { width: 44px; height: 44px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-mark span { font-family: var(--font-heading); color: #fff; font-size: 20px; letter-spacing: -1px; }
+  .school-name { font-family: var(--font-heading); font-size: 18px; color: var(--red); line-height: 1.2; }
+  .school-sub { font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
+
+  .alert-banner {
+    background: #1A1A1A; color: #fff; text-align: center;
+    padding: 12px 24px; font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .alert-banner .alert-dot {
+    width: 8px; height: 8px; background: var(--red);
+    border-radius: 50%; display: inline-block;
+    animation: pulse 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero { background: #fff; padding: 52px 24px 48px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero-tag { display: inline-block; background: #FFF0F2; color: var(--red); font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; border: 1px solid #F7C0C8; margin-bottom: 20px; }
+  .hero h1 { font-family: var(--font-heading); font-size: clamp(28px, 5vw, 46px); line-height: 1.12; color: var(--text); max-width: 640px; margin: 0 auto 16px; }
+  .hero h1 em { font-style: normal; color: var(--red); }
+  .hero .hero-desc { font-size: 17px; color: var(--text-muted); max-width: 540px; margin: 0 auto 10px; }
+  .hero .hero-urgency { font-size: 15px; font-weight: 700; color: var(--text); max-width: 540px; margin: 0 auto 28px; }
+  .hero-cta { display: inline-block; background: var(--red); color: #fff; font-family: var(--font-body); font-weight: 700; font-size: 16px; padding: 15px 32px; border-radius: 8px; text-decoration: none; transition: background 0.15s; }
+  .hero-cta:hover { background: #B5061E; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  h2 { font-family: var(--font-heading); font-size: clamp(22px, 3vw, 28px); line-height: 1.25; color: var(--text); margin-bottom: 16px; }
+  p { color: var(--text-muted); margin-bottom: 14px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 700; }
+  a { color: var(--blue); }
+
+  /* urgency box */
+  .urgency-box {
+    background: #1A1A1A; color: #fff; border-radius: 10px;
+    padding: 18px 22px; margin: 0 0 24px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .urgency-box .ub-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .urgency-box .ub-text { font-size: 15px; line-height: 1.55; }
+  .urgency-box .ub-text strong { color: #fff; }
+  .urgency-box .ub-text span { color: rgba(255,255,255,0.75); }
+
+  .email-section { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-top: 8px; }
+  .email-intro { font-size: 15px; color: var(--text-muted); margin-bottom: 22px; }
+  .field-row { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .field-group { flex: 1; min-width: 160px; }
+  .field-label { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+  input[type="text"] { width: 100%; padding: 9px 12px; font-family: var(--font-body); font-size: 14px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--text); outline: none; transition: border-color 0.15s; }
+  input[type="text"]:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(17,140,205,0.12); }
+  .email-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-top: 4px; }
+  .meta-line { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; display: flex; gap: 6px; flex-wrap: wrap; align-items: baseline; }
+  .meta-line strong { color: var(--text); font-weight: 700; }
+  .cc-tag { font-size: 11px; padding: 1px 8px; background: #FFF5DC; color: #8A6400; border-radius: 20px; font-weight: 700; letter-spacing: 0.03em; }
+  .subject-row { font-size: 14px; font-weight: 700; color: var(--text); border-top: 1px solid var(--border); margin: 10px 0; padding-top: 10px; }
+  #email-body { font-size: 14px; line-height: 1.75; color: var(--text); white-space: pre-wrap; }
+  .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
+  .btn { padding: 10px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 700; border-radius: 8px; cursor: pointer; border: 1.5px solid var(--border); background: #fff; color: var(--text); transition: all 0.15s; }
+  .btn:hover { border-color: var(--text-muted); background: var(--light-gray); }
+  .btn.primary { background: var(--red); color: #fff; border-color: var(--red); }
+  .btn.primary:hover { background: #B5061E; border-color: #B5061E; }
+  .btn.blue { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .btn.blue:hover { background: #0D72AA; }
+  .copied-msg { font-size: 13px; color: #1A7A3C; font-weight: 600; display: none; }
+
+  .callout { background: #FFF5F6; border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 20px 0; }
+  .callout p { color: var(--text); font-size: 15px; margin: 0; }
+
+  .hearing-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .hi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 4px; }
+  .hi-value { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.3; }
+  .hi-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  .fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 14px; margin: 22px 0; }
+  .fact-card { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .fact-value { font-family: var(--font-heading); font-size: 24px; color: var(--red); line-height: 1; margin-bottom: 4px; }
+  .fact-desc { font-size: 13px; color: var(--text-muted); line-height: 1.4; margin: 0; }
+
+  .links-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  .links-list a { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: #fff; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 14px; font-weight: 600; transition: border-color 0.15s, box-shadow 0.15s; }
+  .links-list a:hover { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(17,140,205,0.1); }
+  .link-icon { width: 32px; height: 32px; background: var(--light-gray); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .link-body { flex: 1; }
+  .link-meta { font-size: 12px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+  .link-arrow { color: var(--blue); font-size: 18px; flex-shrink: 0; }
+
+  .share-block { background: var(--red); border-radius: 12px; padding: 28px 32px; color: #fff; text-align: center; margin-top: 8px; }
+  .share-block h3 { font-family: var(--font-heading); font-size: 22px; margin-bottom: 10px; }
+  .share-block p { color: rgba(255,255,255,0.8); font-size: 15px; margin-bottom: 20px; }
+  .share-url { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 10px 16px; font-size: 14px; font-weight: 600; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; max-width: 440px; margin: 0 auto; }
+  .share-url:hover { background: rgba(255,255,255,0.22); }
+  .share-url .url-text { opacity: 0.8; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .site-footer { background: #fff; border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
+  .site-footer strong { color: var(--text); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 36px 20px 32px; }
+    section { padding: 36px 0; }
+    .email-section { padding: 20px 16px; }
+    .share-block { padding: 24px 20px; }
+    .alert-banner { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-mark"><span>JQ</span></div>
+  <div>
+    <div class="school-name">Josiah Quincy Elementary School</div>
+    <div class="school-sub">School Community Council &middot; Parent Action</div>
+  </div>
+</header>
+
+<div class="alert-banner">
+  <span class="alert-dot"></span>
+  Action needed now &mdash; the licensing hearings are imminent
+  <span class="alert-dot"></span>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">Community Alert</div>
+  <h1>Oppose the <em>Centerfolds</em> Relocation to Our Neighborhood</h1>
+  <p class="hero-desc">One of Boston&rsquo;s last two remaining strip clubs is seeking to move to 27&ndash;29 Stuart Street &mdash; steps from our school and 700+ students.</p>
+  <p class="hero-urgency">Send your email today. Every voice on the official record matters.</p>
+  <a href="#take-action" class="hero-cta">Send your email now &rarr;</a>
+</div>
+
+<div class="container">
+
+  <section id="take-action">
+    <div class="section-label">Take action now</div>
+    <h2>Send your opposition email</h2>
+
+    <div class="urgency-box">
+      <div class="ub-icon">&#9888;</div>
+      <div class="ub-text">
+        <strong>The hearings are coming and we need emails in now.</strong><br/>
+        <span>The application goes before the <strong style="color:#fff;">Boston Licensing Board</strong> (alcohol license) and the <strong style="color:#fff;">Mayor&rsquo;s Office of Consumer Affairs and Licensing</strong> (entertainment license). Written opposition from parents becomes part of the official record reviewed at both hearings. Councillor Lin&rsquo;s office has asked that you CC her directly.</span>
+      </div>
+    </div>
+
+    <div class="email-section">
+      <p class="email-intro">Add your name below &mdash; the rest is ready to send.</p>
+      <div class="field-row">
+        <div class="field-group">
+          <div class="field-label">Your name</div>
+          <input type="text" id="name-input" placeholder="e.g. Kristin Smith" oninput="updateEmail()" />
+        </div>
+        <div class="field-group">
+          <div class="field-label">Child&rsquo;s grade (optional)</div>
+          <input type="text" id="grade-input" placeholder="e.g. 2nd grade" oninput="updateEmail()" />
+        </div>
+      </div>
+      <div class="email-card">
+        <div class="meta-line"><strong>To:</strong> eva.jones2@boston.gov, conor.newman@boston.gov</div>
+        <div class="meta-line"><strong>CC:</strong> katrina.lin@boston.gov <span class="cc-tag">per Councillor Lin&rsquo;s request</span></div>
+        <div class="subject-row">Subject: Opposition to Adult Entertainment License Transfer &mdash; Centerfolds to 27&ndash;29 Stuart Street</div>
+        <div id="email-body"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary" onclick="copyEmail()">Copy email</button>
+        <button class="btn blue" onclick="openMail()">Open in mail app</button>
+        <span class="copied-msg" id="copied-msg">&#10003; Copied to clipboard</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">What&rsquo;s happening</div>
+    <h2>The proposal</h2>
+    <p>Centerfolds &mdash; one of only two remaining adult entertainment venues in Boston &mdash; is applying to <strong>relocate from the Theater District to 27&ndash;29 Stuart Street</strong>, the former Jacob Wirth restaurant site. The Boston Globe reported in November that Chinatown community members were already raising concerns when this proposal first surfaced. Now the formal licensing process is underway.</p>
+    <p>The application covers two licenses: an <strong>all-alcohol license</strong> before the Boston Licensing Board, and an <strong>adult entertainment license</strong> before the Mayor&rsquo;s Office of Consumer Affairs and Licensing. Proposed hours of operation are <strong>6pm&ndash;2am</strong>.</p>
+
+    <div class="callout">
+      <p><strong>27&ndash;29 Stuart Street is steps from the Josiah Quincy Elementary School community.</strong> More than 700 students and their families travel this corridor every day. This location is not appropriate for an adult entertainment venue operating until 2am.</p>
+    </div>
+
+    <div class="hearing-card">
+      <div class="hearing-item">
+        <div class="hi-label">Proposed address</div>
+        <div class="hi-value">27&ndash;29 Stuart St</div>
+        <div class="hi-sub">Former Jacob Wirth site, Downtown</div>
+      </div>
+      <div class="hearing-item">
+        <div class="hi-label">Proposed hours</div>
+        <div class="hi-value">6pm &ndash; 2am</div>
+        <div class="hi-sub">All-alcohol + adult entertainment</div>
+      </div>
+      <div class="hearing-item">
+        <div class="hi-label">Two licensing reviews</div>
+        <div class="hi-value">Two separate hearings</div>
+        <div class="hi-sub">Licensing Board + Mayor&rsquo;s OCAL</div>
+      </div>
+      <div class="hearing-item">
+        <div class="hi-label">Abutters meeting</div>
+        <div class="hi-value">March 23, 2026</div>
+        <div class="hi-sub">Held &mdash; formal hearings imminent</div>
+      </div>
+    </div>
+
+    <p>The community abutters meeting was held on March 23rd. <strong>The formal licensing hearings are the next and decisive step</strong> &mdash; written opposition submitted now will be in the official record that board members review when making their decision.</p>
+
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fact-value">700+</div>
+        <p class="fact-desc">Students at JQES, from K1 through grade 5</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-value">2 of 2</div>
+        <p class="fact-desc">One of only two remaining strip clubs in all of Boston</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-value">2am</div>
+        <p class="fact-desc">Proposed closing time &mdash; every night, on a school corridor</p>
+      </div>
+      <div class="fact-card">
+        <div class="fact-value">2</div>
+        <p class="fact-desc">Separate licenses under review &mdash; both can be denied</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Why your voice matters</div>
+    <h2>Written opposition goes on the official record</h2>
+    <p>The Boston Licensing Board and the Mayor&rsquo;s Office of Consumer Affairs and Licensing both consider community input when reviewing license applications. Individual letters from parents and residents are logged into the official case file and reviewed by the board members making the final decision.</p>
+    <p>Our city councillor, <strong>Katrina Lin</strong>, has personally connected the JQES community with Eva Jones and Conor Newman &mdash; the officials directly handling this application. She has asked that community members email them and CC her office so that opposition is tracked at every level.</p>
+    <p>The School Community Council has raised this issue through our advocacy channels. Now we need every JQES family to add their individual voice. <strong>The more emails on record, the harder this is to ignore.</strong></p>
+  </section>
+
+  <section>
+    <div class="section-label">Learn more</div>
+    <h2>Background &amp; resources</h2>
+    <ul class="links-list">
+      <li>
+        <a href="https://www.boston.com/news/the-boston-globe/2025/11/16/one-of-bostons-two-remaining-strip-clubs-wants-to-move-chinatown-is-leery/" target="_blank" rel="noopener">
+          <div class="link-icon">📰</div>
+          <div class="link-body">
+            &ldquo;One of Boston&rsquo;s two remaining strip clubs wants to move. Chinatown is leery.&rdquo;
+            <div class="link-meta">Boston Globe / Boston.com &middot; November 2025 &middot; Background on the proposal and community reaction</div>
+          </div>
+          <div class="link-arrow">&#8599;</div>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.boston.gov/calendar/downtown-27-29-stuart-street-abutters-meeting" target="_blank" rel="noopener">
+          <div class="link-icon">🏛</div>
+          <div class="link-body">
+            Official City of Boston abutters meeting notice
+            <div class="link-meta">boston.gov &middot; Full application details including proposed hours and license types</div>
+          </div>
+          <div class="link-arrow">&#8599;</div>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.boston.gov/departments/licensing-board" target="_blank" rel="noopener">
+          <div class="link-icon">📋</div>
+          <div class="link-body">
+            Boston Licensing Board
+            <div class="link-meta">boston.gov &middot; Reviews the all-alcohol license component of this application</div>
+          </div>
+          <div class="link-arrow">&#8599;</div>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.boston.gov/departments/consumer-affairs-and-licensing" target="_blank" rel="noopener">
+          <div class="link-icon">📋</div>
+          <div class="link-body">
+            Mayor&rsquo;s Office of Consumer Affairs and Licensing
+            <div class="link-meta">boston.gov &middot; Reviews the adult entertainment license component</div>
+          </div>
+          <div class="link-arrow">&#8599;</div>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.jqes.org" target="_blank" rel="noopener">
+          <div class="link-icon">🏫</div>
+          <div class="link-body">
+            Josiah Quincy Elementary School
+            <div class="link-meta">jqes.org &middot; Learn about our school and community</div>
+          </div>
+          <div class="link-arrow">&#8599;</div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Spread the word</div>
+    <h2>Share with other JQES families</h2>
+    <p>Please forward this page to every JQES parent and caregiver you know. The stronger our numbers, the clearer our message to the Licensing Board.</p>
+    <div class="share-block">
+      <h3>Share this page</h3>
+      <p>Send this link to other JQES families so they can add their voice too.</p>
+      <div class="share-url" onclick="copyLink()">
+        <span class="url-text" id="share-url-text"></span>
+        <span id="copy-link-label">Copy link</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <p>Published by the <strong>JQES School Community Council</strong> &middot; <a href="mailto:jqes-scc@googlegroups.com">jqes-scc@googlegroups.com</a></p>
+  <p style="margin-top:6px;">885 Washington Street, Boston MA 02111 &middot; Chinatown / South End</p>
+</footer>
+
+<script>
+function getBody(name, grade) {
+  var nameStr = name.trim() || "[Your Name]";
+  var gradeStr = grade.trim();
+  var gradeClause = gradeStr ? " My child is currently in " + gradeStr + " at JQES." : "";
+  return "Dear Ms. Jones and Mr. Newman,\n\nI am writing as a parent at the Josiah Quincy Elementary School (JQES), located at 885 Washington Street in Boston\u2019s Chinatown/South End, to formally express my strong opposition to the proposed transfer of Centerfolds\u2019 adult entertainment and all-alcohol licenses to 27\u201329 Stuart Street, at the former Jacob Wirth location." + gradeClause + "\n\nJQES is the first accredited IB PYP school in the Boston Public Schools system and serves over 700 students in a bilingual English-Chinese community. Our students and families walk the Stuart Street corridor every day \u2014 to and from school, to nearby parks and community spaces. Relocating an adult entertainment venue operating until 2am to 27\u201329 Stuart Street would place it in close proximity to a school serving children from kindergarten through 5th grade.\n\nI also note that Centerfolds is one of only two remaining adult entertainment venues in the city. That this establishment is seeking to relocate specifically into a neighborhood anchored by a public elementary school makes this application particularly concerning.\n\nI urge both the Boston Licensing Board and the Mayor\u2019s Office of Consumer Affairs and Licensing to deny this application. The proximity to a public elementary school, the character of this family community, and the proposed late-night operating hours until 2am make this location wholly inappropriate.\n\nI respectfully request that this letter be entered into the official record for this application.\n\nThank you for your consideration.\n\nSincerely,\n" + nameStr + "\nParent, Josiah Quincy Elementary School\n885 Washington Street, Boston MA 02111";
+}
+function updateEmail() {
+  document.getElementById('email-body').textContent = getBody(
+    document.getElementById('name-input').value,
+    document.getElementById('grade-input').value
+  );
+}
+function copyEmail() {
+  var body = getBody(document.getElementById('name-input').value, document.getElementById('grade-input').value);
+  var full = "To: eva.jones2@boston.gov, conor.newman@boston.gov\nCC: katrina.lin@boston.gov\nSubject: Opposition to Adult Entertainment License Transfer \u2014 Centerfolds to 27\u201329 Stuart Street\n\n" + body;
+  navigator.clipboard.writeText(full).then(function() {
+    var msg = document.getElementById('copied-msg');
+    msg.style.display = 'inline';
+    setTimeout(function() { msg.style.display = 'none'; }, 2500);
+  });
+}
+function openMail() {
+  var body = encodeURIComponent(getBody(document.getElementById('name-input').value, document.getElementById('grade-input').value));
+  var subject = encodeURIComponent("Opposition to Adult Entertainment License Transfer \u2014 Centerfolds to 27\u201329 Stuart Street");
+  window.location.href = "mailto:eva.jones2@boston.gov,conor.newman@boston.gov?cc=katrina.lin@boston.gov&subject=" + subject + "&body=" + body;
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(function() {
+    document.getElementById('copy-link-label').textContent = '\u2713 Copied!';
+    setTimeout(function() { document.getElementById('copy-link-label').textContent = 'Copy link'; }, 2000);
+  });
+}
+document.getElementById('share-url-text').textContent = window.location.href || 'your-hosted-url-here';
+updateEmail();
+</script>
+</body>
+</html>
