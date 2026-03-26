@@ -947,14 +947,14 @@
   </div>
   <div class="footer-name">Josiah Quincy Elementary <span class="accent">SCC</span></div>
   <p>Email us questions, ideas, or feedback — we'd love to hear from you!</p>
-  <a href="mailto:josiahquincyparentcouncil@gmail.com" class="footer-email">
+  <a href="/cdn-cgi/l/email-protection#32585d415b535a43475b5c514b425340575c46515d475c515b5e72555f535b5e1c515d5f" class="footer-email">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    josiahquincyparentcouncil@gmail.com
+    <span class="__cf_email__" data-cfemail="305a5f435951584145595e5349405142555e44535f455e53595c70575d51595c1e535f5d">[email&#160;protected]</span>
   </a>
   <div class="footer-bottom">Made with care by the JQES School Community Council</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Enable animations only when JS runs ──
   document.documentElement.classList.add('js-ready');
 
@@ -1047,7 +1047,9 @@
       }
 
       // Days until event for badge
-      const daysUntil = Math.ceil((start - new Date()) / 86400000);
+      const todayMidnight = new Date(); todayMidnight.setHours(0,0,0,0);
+    const startMidnight = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    const daysUntil = Math.round((startMidnight - todayMidnight) / 86400000);
 
       return {
         title: item.summary || 'Untitled Event',
@@ -1218,16 +1220,4 @@
       // ── Auto-refresh every 30 minutes ──
       setInterval(() => {
         fetchEvents().then(events => {
-          if (events !== null) {
-            // Clear existing events
-            grid.querySelectorAll('.event-card, .events-empty').forEach(el => el.remove());
-            renderEvents(events);
-          }
-        });
-      }, 30 * 60 * 1000);
-    }
-  })();
-
-</script>
-</body>
-</html>
+          if
