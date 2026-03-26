@@ -1220,4 +1220,16 @@
       // ── Auto-refresh every 30 minutes ──
       setInterval(() => {
         fetchEvents().then(events => {
-          if
+          if (events !== null) {
+            // Clear existing events
+            grid.querySelectorAll('.event-card, .events-empty').forEach(el => el.remove());
+            renderEvents(events);
+          }
+        });
+      }, 30 * 60 * 1000);
+    }
+  })();
+
+</script>
+</body>
+</html>
